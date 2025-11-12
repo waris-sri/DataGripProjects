@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cb573934-eb28-4c75-8d8a-edbb9cb665cd" name="Changes" comment="feat: add PJ2SEC03GR08DB">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2099d5e5-e35a-4b4f-8e3e-a6049467850c.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/data_source_mapping.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PJ2SEC03GR08DB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/PJ2SEC03GR08DB.sql" afterDir="false" />
-    </list>
+    <list default="true" id="cb573934-eb28-4c75-8d8a-edbb9cb665cd" name="Changes" comment="reformat file" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,7 +38,6 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "last_opened_file_path": "/Users/warissripatoomrak/Documents/GitHub/fundamentals-of-database-systems/DataGripProjects/PJ2SEC03GR08DB",
     "settings.editor.selected.configurable": "preferences.sourceCode.SQL",
@@ -87,7 +79,8 @@
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT_PROFILE" value="Default" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <MESSAGE value="feat: add PJ2SEC03GR08DB" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add PJ2SEC03GR08DB" />
+    <MESSAGE value="reformat file" />
+    <option name="LAST_COMMIT_MESSAGE" value="reformat file" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
