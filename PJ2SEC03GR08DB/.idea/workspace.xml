@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="cb573934-eb28-4c75-8d8a-edbb9cb665cd" name="Changes" comment="feat: add PJ2SEC03GR08DB">
+      <change afterPath="$USER_HOME$/Documents/GitHub/fundamentals-of-database-systems/DataGripProjects/PJ2SEC03GR08DB/PJ2SEC03GR08DB.sql" afterDir="false" />
+      <change beforePath="$USER_HOME$/Documents/GitHub/fundamentals-of-database-systems/DataGripProjects/PJ2SEC03GR08DB/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$USER_HOME$/Documents/GitHub/fundamentals-of-database-systems/DataGripProjects/PJ2SEC03GR08DB/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$USER_HOME$/Documents/GitHub/fundamentals-of-database-systems/DataGripProjects/PJ2SEC03GR08DB/.idea/data_source_mapping.xml" beforeDir="false" />
+      <change beforePath="$USER_HOME$/Documents/GitHub/fundamentals-of-database-systems/DataGripProjects/PJ2SEC03GR08DB/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$USER_HOME$/Documents/GitHub/fundamentals-of-database-systems/DataGripProjects/PJ2SEC03GR08DB/.idea/vcs.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="repository" />
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$USER_HOME$/Documents/GitHub/fundamentals-of-database-systems" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="35NundtFpVdx1pNE6kenAUctiSQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showScratchesAndConsoles" value="false" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/warissripatoomrak/Documents/GitHub/fundamentals-of-database-systems/DataGripProjects/PJ2SEC03GR08DB",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "sql.codeStylePanel.last.previewDialect": "MySQL"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$USER_HOME$/Documents/GitHub/fundamentals-of-database-systems/DataGripProjects/PJ2SEC03GR08DB" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cb573934-eb28-4c75-8d8a-edbb9cb665cd" name="Changes" comment="" />
+      <created>1762963018866</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762963018866</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT_PROFILE" value="Default" />
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
+    <MESSAGE value="feat: add PJ2SEC03GR08DB" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add PJ2SEC03GR08DB" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
