@@ -18,6 +18,7 @@ USE PJ2SEC03GR08DB;
 # DROP TABLE IF EXISTS Order_TotalAmount;
 # DROP TABLE IF EXISTS Promotion_AvailableItem;
 
+-- IDs MUST be CHAR(n) since INT is for numbers that can be processed and calculated to fulfill meaningful tasks
 CREATE TABLE Branch (
     BranchID        INT(7) PRIMARY KEY,
     BranchLocation  VARCHAR(100) NOT NULL,

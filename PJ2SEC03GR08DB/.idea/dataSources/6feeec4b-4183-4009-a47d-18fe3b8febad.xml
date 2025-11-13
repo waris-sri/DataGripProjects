@@ -1001,13 +1001,13 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <schema id="289" parent="1" name="L14_6788112">
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2025-11-13.08:41:02</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-11-13.15:01:53</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="290" parent="1" name="PJ2SEC03GR08DB">
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2025-11-13.06:27:16</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-11-13.14:00:33</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="291" parent="1" name="information_schema">
@@ -1019,16 +1019,16 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <schema id="293" parent="1" name="performance_schema">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="294" parent="1" name="sys">
+    <schema id="294" parent="1" name="sec3group08112">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="295" parent="1" name="tinycollege">
+    <schema id="295" parent="1" name="sys">
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </schema>
+    <schema id="296" parent="1" name="tinycollege">
       <CollationName>utf8mb3_unicode_ci</CollationName>
     </schema>
-    <schema id="296" parent="1" name="tinycompany">
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </schema>
-    <schema id="297" parent="1" name="tinymovies">
+    <schema id="297" parent="1" name="tinycompany">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="298" parent="1" name="mysql.infoschema">
@@ -1081,756 +1081,504 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="309" parent="290" name="Bill">
+    <table id="309" parent="290" name="Branch">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="310" parent="290" name="Branch">
+    <table id="310" parent="290" name="Cashier">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="311" parent="290" name="Cashier">
+    <table id="311" parent="290" name="Orders">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="312" parent="290" name="Customer">
+    <table id="312" parent="290" name="Promoter">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="313" parent="290" name="Order">
+    <table id="313" parent="290" name="Promotion">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="314" parent="290" name="OrderProduct">
+    <table id="314" parent="290" name="Promotion_Promoter">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="315" parent="290" name="Order_TotalAmount">
+    <table id="315" parent="290" name="Staff">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="316" parent="290" name="Product">
-      <DetailsLevel>3</DetailsLevel>
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="317" parent="290" name="Promoter">
-      <DetailsLevel>3</DetailsLevel>
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="318" parent="290" name="Promoter_Promotion_Usage">
-      <DetailsLevel>3</DetailsLevel>
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="319" parent="290" name="Promotion">
-      <DetailsLevel>3</DetailsLevel>
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="320" parent="290" name="Promotion_AvailableItem">
-      <DetailsLevel>3</DetailsLevel>
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="321" parent="290" name="Promotion_Promoter">
-      <DetailsLevel>3</DetailsLevel>
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="322" parent="290" name="Staff">
-      <DetailsLevel>3</DetailsLevel>
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <column id="323" parent="302" name="AddrStaffID">
+    <column id="316" parent="302" name="AddrStaffID">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>char(4)|0s</StoredType>
     </column>
-    <column id="324" parent="302" name="StfAddress">
+    <column id="317" parent="302" name="StfAddress">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(200)|0s</StoredType>
     </column>
-    <foreign-key id="325" parent="302" name="FK_AddrStaffID">
+    <foreign-key id="318" parent="302" name="FK_AddrStaffID">
       <ColNames>AddrStaffID</ColNames>
       <RefColNames>StaffID</RefColNames>
       <RefTableName>Staff</RefTableName>
       <RefTableParentName>l14_6788112</RefTableParentName>
     </foreign-key>
-    <index id="326" parent="302" name="PRIMARY">
+    <index id="319" parent="302" name="PRIMARY">
       <ColNames>AddrStaffID
 StfAddress</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="327" parent="302" name="PRIMARY">
+    <key id="320" parent="302" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="328" parent="303" name="BranchID">
+    <column id="321" parent="303" name="BranchID">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>char(2)|0s</StoredType>
     </column>
-    <column id="329" parent="303" name="BranchLocation">
+    <column id="322" parent="303" name="BranchLocation">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(200)|0s</StoredType>
     </column>
-    <column id="330" parent="303" name="DateEstablished">
+    <column id="323" parent="303" name="DateEstablished">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="331" parent="303" name="SupervisorName">
+    <column id="324" parent="303" name="SupervisorName">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <index id="332" parent="303" name="BranchID">
+    <index id="325" parent="303" name="BranchID">
       <ColNames>BranchID</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="333" parent="303" name="PRIMARY">
+    <index id="326" parent="303" name="PRIMARY">
       <ColNames>BranchID</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="334" parent="303" name="PRIMARY">
+    <key id="327" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="335" parent="303" name="BranchID">
+    <key id="328" parent="303" name="BranchID">
       <UnderlyingIndexName>BranchID</UnderlyingIndexName>
     </key>
-    <column id="336" parent="304" name="CashierStaffID">
+    <column id="329" parent="304" name="CashierStaffID">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>char(4)|0s</StoredType>
     </column>
-    <column id="337" parent="304" name="CashierServiceSkill">
+    <column id="330" parent="304" name="CashierServiceSkill">
       <Position>2</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="338" parent="304" name="CashierNumber">
+    <column id="331" parent="304" name="CashierNumber">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>char(4)|0s</StoredType>
     </column>
-    <foreign-key id="339" parent="304" name="FK_CashierStaffID">
+    <foreign-key id="332" parent="304" name="FK_CashierStaffID">
       <ColNames>CashierStaffID</ColNames>
       <RefColNames>StaffID</RefColNames>
       <RefTableName>Staff</RefTableName>
       <RefTableParentName>l14_6788112</RefTableParentName>
     </foreign-key>
-    <index id="340" parent="304" name="FK_CashierStaffID">
+    <index id="333" parent="304" name="FK_CashierStaffID">
       <ColNames>CashierStaffID</ColNames>
       <Type>btree</Type>
     </index>
-    <column id="341" parent="305" name="EmailStaffID">
+    <column id="334" parent="305" name="EmailStaffID">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>char(4)|0s</StoredType>
     </column>
-    <column id="342" parent="305" name="StfEmail">
+    <column id="335" parent="305" name="StfEmail">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(68)|0s</StoredType>
     </column>
-    <foreign-key id="343" parent="305" name="FK_EmailStaffID">
+    <foreign-key id="336" parent="305" name="FK_EmailStaffID">
       <ColNames>EmailStaffID</ColNames>
       <RefColNames>StaffID</RefColNames>
       <RefTableName>Staff</RefTableName>
       <RefTableParentName>l14_6788112</RefTableParentName>
     </foreign-key>
-    <index id="344" parent="305" name="PRIMARY">
+    <index id="337" parent="305" name="PRIMARY">
       <ColNames>EmailStaffID
 StfEmail</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="345" parent="305" name="PRIMARY">
+    <key id="338" parent="305" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="346" parent="306" name="PhoneStaffID">
+    <column id="339" parent="306" name="PhoneStaffID">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>char(4)|0s</StoredType>
     </column>
-    <column id="347" parent="306" name="StfPhoneNum">
+    <column id="340" parent="306" name="StfPhoneNum">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(12)|0s</StoredType>
     </column>
-    <foreign-key id="348" parent="306" name="FK_PhoneStaffID">
+    <foreign-key id="341" parent="306" name="FK_PhoneStaffID">
       <ColNames>PhoneStaffID</ColNames>
       <RefColNames>StaffID</RefColNames>
       <RefTableName>Staff</RefTableName>
       <RefTableParentName>l14_6788112</RefTableParentName>
     </foreign-key>
-    <index id="349" parent="306" name="PRIMARY">
+    <index id="342" parent="306" name="PRIMARY">
       <ColNames>PhoneStaffID
 StfPhoneNum</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="350" parent="306" name="PRIMARY">
+    <key id="343" parent="306" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <check id="351" parent="307" name="CHK_PromoterRole">
+    <check id="344" parent="307" name="CHK_PromoterRole">
       <Predicate>`PromoterRole` in (_utf8mb4\&apos;Designer\&apos;,_utf8mb4\&apos;Coordinator\&apos;,_utf8mb4\&apos;Maintainer\&apos;)</Predicate>
     </check>
-    <column id="352" parent="307" name="PromoterStaffID">
+    <column id="345" parent="307" name="PromoterStaffID">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>char(4)|0s</StoredType>
     </column>
-    <column id="353" parent="307" name="PromoterRole">
+    <column id="346" parent="307" name="PromoterRole">
       <Position>2</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <foreign-key id="354" parent="307" name="FK_PromoterStaffID">
+    <foreign-key id="347" parent="307" name="FK_PromoterStaffID">
       <ColNames>PromoterStaffID</ColNames>
       <RefColNames>StaffID</RefColNames>
       <RefTableName>Staff</RefTableName>
       <RefTableParentName>l14_6788112</RefTableParentName>
     </foreign-key>
-    <index id="355" parent="307" name="FK_PromoterStaffID">
+    <index id="348" parent="307" name="FK_PromoterStaffID">
       <ColNames>PromoterStaffID</ColNames>
       <Type>btree</Type>
     </index>
-    <check id="356" parent="308" name="CHK_StfRole">
+    <check id="349" parent="308" name="CHK_StfRole">
       <Predicate>`StfRole` in (_utf8mb4\&apos;Cashier\&apos;,_utf8mb4\&apos;Promoter\&apos;)</Predicate>
     </check>
-    <column id="357" parent="308" name="StaffID">
+    <column id="350" parent="308" name="StaffID">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>char(4)|0s</StoredType>
     </column>
-    <column id="358" parent="308" name="FirstName">
+    <column id="351" parent="308" name="FirstName">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="359" parent="308" name="LastName">
+    <column id="352" parent="308" name="LastName">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="360" parent="308" name="WorkingDate">
+    <column id="353" parent="308" name="WorkingDate">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="361" parent="308" name="StfRole">
+    <column id="354" parent="308" name="StfRole">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="362" parent="308" name="Salary">
+    <column id="355" parent="308" name="Salary">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StoredType>decimal(7,2 digit)|0s</StoredType>
     </column>
-    <column id="363" parent="308" name="StfBranchID">
+    <column id="356" parent="308" name="StfBranchID">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StoredType>char(2)|0s</StoredType>
     </column>
-    <foreign-key id="364" parent="308" name="FK_StfBranchID">
+    <foreign-key id="357" parent="308" name="FK_StfBranchID">
       <ColNames>StfBranchID</ColNames>
       <RefColNames>BranchID</RefColNames>
       <RefTableName>Branch</RefTableName>
       <RefTableParentName>l14_6788112</RefTableParentName>
     </foreign-key>
-    <index id="365" parent="308" name="PRIMARY">
+    <index id="358" parent="308" name="PRIMARY">
       <ColNames>StaffID</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="366" parent="308" name="StaffID">
+    <index id="359" parent="308" name="StaffID">
       <ColNames>StaffID</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="367" parent="308" name="StfBranchID">
+    <index id="360" parent="308" name="FK_StfBranchID">
       <ColNames>StfBranchID</ColNames>
       <Type>btree</Type>
-      <Unique>1</Unique>
     </index>
-    <key id="368" parent="308" name="PRIMARY">
+    <key id="361" parent="308" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="369" parent="308" name="StaffID">
+    <key id="362" parent="308" name="StaffID">
       <UnderlyingIndexName>StaffID</UnderlyingIndexName>
     </key>
-    <key id="370" parent="308" name="StfBranchID">
-      <UnderlyingIndexName>StfBranchID</UnderlyingIndexName>
-    </key>
-    <column id="371" parent="309" name="BillID">
+    <column id="363" parent="309" name="BranchID">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="372" parent="309" name="BillDate">
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-      <StoredType>date|0s</StoredType>
-    </column>
-    <column id="373" parent="309" name="BranchName">
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-      <StoredType>varchar(20)|0s</StoredType>
-    </column>
-    <column id="374" parent="309" name="BillOrderList">
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-      <StoredType>text|0s</StoredType>
-    </column>
-    <column id="375" parent="309" name="BillTime">
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-      <StoredType>time|0s</StoredType>
-    </column>
-    <column id="376" parent="309" name="BillOrderID">
-      <Position>6</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <foreign-key id="377" parent="309" name="FK_BillOrderID">
-      <ColNames>BillOrderID</ColNames>
-      <RefColNames>OrderID</RefColNames>
-      <RefTableName>Order</RefTableName>
-      <RefTableParentName>pj2sec03gr08db</RefTableParentName>
-    </foreign-key>
-    <index id="378" parent="309" name="PRIMARY">
-      <ColNames>BillID</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="379" parent="309" name="FK_BillOrderID">
-      <ColNames>BillOrderID</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="380" parent="309" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="381" parent="310" name="BranchID">
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <column id="382" parent="310" name="BranchLocation">
+    <column id="364" parent="309" name="BranchLocation">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="383" parent="310" name="DateEstablished">
+    <column id="365" parent="309" name="DateEstablished">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="384" parent="310" name="SupervisorNAme">
+    <column id="366" parent="309" name="SupervisorNAme">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>varchar(40)|0s</StoredType>
     </column>
-    <index id="385" parent="310" name="PRIMARY">
+    <index id="367" parent="309" name="PRIMARY">
       <ColNames>BranchID</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="386" parent="310" name="PRIMARY">
+    <key id="368" parent="309" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="387" parent="311" name="CashierStaffID">
+    <column id="369" parent="310" name="CashierStaffID">
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="388" parent="311" name="CashierServiceSkill">
+    <column id="370" parent="310" name="CashierServiceSkill">
       <Position>2</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="389" parent="311" name="CashierNumber">
+    <column id="371" parent="310" name="CashierNumber">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="390" parent="311" name="FK_CashierStaffID">
+    <foreign-key id="372" parent="310" name="FK_CashStfID">
       <ColNames>CashierStaffID</ColNames>
       <RefColNames>StaffID</RefColNames>
       <RefTableName>Staff</RefTableName>
       <RefTableParentName>pj2sec03gr08db</RefTableParentName>
     </foreign-key>
-    <index id="391" parent="311" name="FK_CashierStaffID">
+    <index id="373" parent="310" name="FK_CashStfID">
       <ColNames>CashierStaffID</ColNames>
       <Type>btree</Type>
     </index>
-    <column id="392" parent="312" name="CustomerID">
+    <column id="374" parent="311" name="OrderID">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="393" parent="312" name="FirstName">
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-      <StoredType>varchar(20)|0s</StoredType>
-    </column>
-    <column id="394" parent="312" name="LastName">
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-      <StoredType>varchar(20)|0s</StoredType>
-    </column>
-    <column id="395" parent="312" name="DateOfBirth">
-      <Position>4</Position>
-      <StoredType>date|0s</StoredType>
-    </column>
-    <column id="396" parent="312" name="Gender">
-      <Position>5</Position>
-      <StoredType>varchar(10)|0s</StoredType>
-    </column>
-    <column id="397" parent="312" name="CustOrderID">
-      <Position>6</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <foreign-key id="398" parent="312" name="FK_CustOrderID">
-      <ColNames>CustOrderID</ColNames>
-      <RefColNames>OrderID</RefColNames>
-      <RefTableName>Order</RefTableName>
-      <RefTableParentName>pj2sec03gr08db</RefTableParentName>
-    </foreign-key>
-    <index id="399" parent="312" name="PRIMARY">
-      <ColNames>CustomerID</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="400" parent="312" name="FK_CustOrderID">
-      <ColNames>CustOrderID</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="401" parent="312" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="402" parent="313" name="OrderID">
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <column id="403" parent="313" name="OrderTime">
+    <column id="375" parent="311" name="OrderTime">
       <Position>2</Position>
       <StoredType>time|0s</StoredType>
     </column>
-    <column id="404" parent="313" name="OrderDate">
+    <column id="376" parent="311" name="OrderDate">
       <Position>3</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="405" parent="313" name="OrderStatus">
+    <column id="377" parent="311" name="OrderStatus">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="406" parent="313" name="OrderCashierStaffID">
+    <column id="378" parent="311" name="OrderCashierStaffID">
       <Position>5</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="407" parent="313" name="FK_OrderCashierStaffID">
+    <foreign-key id="379" parent="311" name="FK_OrCashierID">
       <ColNames>OrderCashierStaffID</ColNames>
       <RefColNames>CashierStaffID</RefColNames>
       <RefTableName>Cashier</RefTableName>
       <RefTableParentName>pj2sec03gr08db</RefTableParentName>
     </foreign-key>
-    <index id="408" parent="313" name="PRIMARY">
+    <index id="380" parent="311" name="PRIMARY">
       <ColNames>OrderID</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="409" parent="313" name="FK_OrderCashierStaffID">
+    <index id="381" parent="311" name="FK_OrCashierID">
       <ColNames>OrderCashierStaffID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="410" parent="313" name="PRIMARY">
+    <key id="382" parent="311" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="411" parent="314" name="OrderID">
+    <column id="383" parent="312" name="PromoterStaffID">
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="412" parent="314" name="AmountOfProduct">
-      <Position>2</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <column id="413" parent="314" name="ProductID">
-      <Position>3</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <foreign-key id="414" parent="314" name="FK_OrderID">
-      <ColNames>OrderID</ColNames>
-      <RefColNames>OrderID</RefColNames>
-      <RefTableName>Order</RefTableName>
-      <RefTableParentName>pj2sec03gr08db</RefTableParentName>
-    </foreign-key>
-    <foreign-key id="415" parent="314" name="FK_ProductID">
-      <ColNames>ProductID</ColNames>
-      <RefColNames>ProductID</RefColNames>
-      <RefTableName>Product</RefTableName>
-      <RefTableParentName>pj2sec03gr08db</RefTableParentName>
-    </foreign-key>
-    <index id="416" parent="314" name="FK_OrderID">
-      <ColNames>OrderID</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="417" parent="314" name="FK_ProductID">
-      <ColNames>ProductID</ColNames>
-      <Type>btree</Type>
-    </index>
-    <column id="418" parent="315" name="OrderID">
-      <Position>1</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <column id="419" parent="315" name="TotalAmount">
-      <Position>2</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <foreign-key id="420" parent="315" name="FK_OrderID_TotalAmount">
-      <ColNames>OrderID</ColNames>
-      <RefColNames>OrderID</RefColNames>
-      <RefTableName>Order</RefTableName>
-      <RefTableParentName>pj2sec03gr08db</RefTableParentName>
-    </foreign-key>
-    <index id="421" parent="315" name="FK_OrderID_TotalAmount">
-      <ColNames>OrderID</ColNames>
-      <Type>btree</Type>
-    </index>
-    <column id="422" parent="316" name="ProductID">
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <column id="423" parent="316" name="Calories">
-      <Position>2</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <column id="424" parent="316" name="ProductPrice">
-      <Position>3</Position>
-      <StoredType>decimal(13,2 digit)|0s</StoredType>
-    </column>
-    <column id="425" parent="316" name="ProductName">
-      <Position>4</Position>
-      <StoredType>varchar(20)|0s</StoredType>
-    </column>
-    <column id="426" parent="316" name="ExpiryDate">
-      <Position>5</Position>
-      <StoredType>date|0s</StoredType>
-    </column>
-    <index id="427" parent="316" name="PRIMARY">
-      <ColNames>ProductID</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="428" parent="316" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="429" parent="317" name="PromoterStaffID">
-      <Position>1</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <column id="430" parent="317" name="PromotionRole">
+    <column id="384" parent="312" name="PromotionRole">
       <Position>2</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <foreign-key id="431" parent="317" name="FK_PromoterStaffID">
+    <foreign-key id="385" parent="312" name="FK_ProStfID">
       <ColNames>PromoterStaffID</ColNames>
       <RefColNames>StaffID</RefColNames>
       <RefTableName>Staff</RefTableName>
       <RefTableParentName>pj2sec03gr08db</RefTableParentName>
     </foreign-key>
-    <index id="432" parent="317" name="FK_PromoterStaffID">
+    <index id="386" parent="312" name="FK_ProStfID">
       <ColNames>PromoterStaffID</ColNames>
       <Type>btree</Type>
     </index>
-    <column id="433" parent="318" name="PromoterStaffID">
-      <Position>1</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <column id="434" parent="318" name="PromotionUsage">
-      <Position>2</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <foreign-key id="435" parent="318" name="FK_PromoterStaffID_Promoter_Promotion_Usage">
-      <ColNames>PromoterStaffID</ColNames>
-      <RefColNames>PromoterStaffID</RefColNames>
-      <RefTableName>Promoter</RefTableName>
-      <RefTableParentName>pj2sec03gr08db</RefTableParentName>
-    </foreign-key>
-    <index id="436" parent="318" name="FK_PromoterStaffID_Promoter_Promotion_Usage">
-      <ColNames>PromoterStaffID</ColNames>
-      <Type>btree</Type>
-    </index>
-    <column id="437" parent="319" name="PromotionID">
+    <column id="387" parent="313" name="PromotionID">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="438" parent="319" name="EligibilityCriteria">
+    <column id="388" parent="313" name="EligibilityCriteria">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="439" parent="319" name="PromotionName">
+    <column id="389" parent="313" name="PromotionName">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="440" parent="319" name="StartDate">
+    <column id="390" parent="313" name="StartDate">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="441" parent="319" name="EndDate">
+    <column id="391" parent="313" name="EndDate">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <index id="442" parent="319" name="PRIMARY">
+    <index id="392" parent="313" name="PRIMARY">
       <ColNames>PromotionID</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="443" parent="319" name="PRIMARY">
+    <key id="393" parent="313" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="444" parent="320" name="PromotionID">
+    <column id="394" parent="314" name="PromotionID">
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="445" parent="320" name="AvailableTime">
-      <Position>2</Position>
-      <StoredType>time|0s</StoredType>
-    </column>
-    <foreign-key id="446" parent="320" name="FK_PromotionID_AvailableItem">
-      <ColNames>PromotionID</ColNames>
-      <RefColNames>OrderID</RefColNames>
-      <RefTableName>Order</RefTableName>
-      <RefTableParentName>pj2sec03gr08db</RefTableParentName>
-    </foreign-key>
-    <index id="447" parent="320" name="FK_PromotionID_AvailableItem">
-      <ColNames>PromotionID</ColNames>
-      <Type>btree</Type>
-    </index>
-    <column id="448" parent="321" name="PromotionID">
-      <Position>1</Position>
-      <StoredType>int|0s</StoredType>
-    </column>
-    <column id="449" parent="321" name="PromoterStaffID">
+    <column id="395" parent="314" name="PromoterStaffID">
       <Position>2</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="450" parent="321" name="FK_PromotionID">
+    <foreign-key id="396" parent="314" name="FK_PromoID">
       <ColNames>PromotionID</ColNames>
       <RefColNames>PromotionID</RefColNames>
       <RefTableName>Promotion</RefTableName>
       <RefTableParentName>pj2sec03gr08db</RefTableParentName>
     </foreign-key>
-    <foreign-key id="451" parent="321" name="FK_PromoterStaffID_Promotion_Promoter">
+    <foreign-key id="397" parent="314" name="FK_PromoterID">
       <ColNames>PromoterStaffID</ColNames>
       <RefColNames>PromotionID</RefColNames>
       <RefTableName>Promotion</RefTableName>
       <RefTableParentName>pj2sec03gr08db</RefTableParentName>
     </foreign-key>
-    <index id="452" parent="321" name="FK_PromotionID">
+    <index id="398" parent="314" name="FK_PromoID">
       <ColNames>PromotionID</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="453" parent="321" name="FK_PromoterStaffID_Promotion_Promoter">
+    <index id="399" parent="314" name="FK_PromoterID">
       <ColNames>PromoterStaffID</ColNames>
       <Type>btree</Type>
     </index>
-    <column id="454" parent="322" name="StaffID">
+    <column id="400" parent="315" name="StaffID">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="455" parent="322" name="Salary">
+    <column id="401" parent="315" name="Salary">
       <Position>2</Position>
       <StoredType>decimal(13,2 digit)|0s</StoredType>
     </column>
-    <column id="456" parent="322" name="Role">
+    <column id="402" parent="315" name="Role">
       <Position>3</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="457" parent="322" name="PhoneNum">
+    <column id="403" parent="315" name="PhoneNum">
       <Position>4</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="458" parent="322" name="Email">
+    <column id="404" parent="315" name="Email">
       <Position>5</Position>
       <StoredType>varchar(30)|0s</StoredType>
     </column>
-    <column id="459" parent="322" name="WorkingDate">
+    <column id="405" parent="315" name="WorkingDate">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="460" parent="322" name="StfFirstName">
+    <column id="406" parent="315" name="StfFirstName">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="461" parent="322" name="StfLastName">
+    <column id="407" parent="315" name="StfLastName">
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="462" parent="322" name="StfBranchID">
+    <column id="408" parent="315" name="StfBranchID">
       <Position>9</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="463" parent="322" name="FK_StfBranchID">
+    <foreign-key id="409" parent="315" name="FK_StBrID">
       <ColNames>StfBranchID</ColNames>
       <RefColNames>BranchID</RefColNames>
       <RefTableName>Branch</RefTableName>
       <RefTableParentName>pj2sec03gr08db</RefTableParentName>
     </foreign-key>
-    <index id="464" parent="322" name="PRIMARY">
+    <index id="410" parent="315" name="PRIMARY">
       <ColNames>StaffID</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="465" parent="322" name="FK_StfBranchID">
+    <index id="411" parent="315" name="FK_StBrID">
       <ColNames>StfBranchID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="466" parent="322" name="PRIMARY">
+    <key id="412" parent="315" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>

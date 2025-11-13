@@ -1,3 +1,6 @@
+-- Waris Sripatoomrak 6788112, Section 3
+-- Lecture 14
+
 DROP DATABASE IF EXISTS L14_6788112;
 CREATE DATABASE IF NOT EXISTS L14_6788112;
 USE L14_6788112;
@@ -24,7 +27,7 @@ CREATE TABLE Staff (
     WorkingDate DATE                NOT NULL,
     StfRole     VARCHAR(20)         NOT NULL,
     Salary      DECIMAL(7, 2)       NOT NULL,
-    StfBranchID CHAR(2)             NOT NULL UNIQUE,
+    StfBranchID CHAR(2)             NOT NULL,
     CONSTRAINT FK_StfBranchID
         FOREIGN KEY (StfBranchID)
             REFERENCES Branch (BranchID),
@@ -96,7 +99,12 @@ VALUES (101, 'Waris', 'Sripatoomrak', '2020-01-10', 'Cashier', 15000.00, 1),
        (102, 'Nussavas', 'Horchatnukul', '2021-03-20', 'Promoter', 18000.00, 2),
        (103, 'Warawuth', 'Ngamluea', '2019-05-15', 'Cashier', 16000.00, 3),
        (104, 'Pongrawee', 'Thepchai', '2022-07-01', 'Promoter', 17000.00, 4),
-       (105, 'Wachiravich', 'Thaosiri', '2020-11-30', 'Cashier', 15500.00, 5);
+       (105, 'Wachiravich', 'Thaosiri', '2020-11-30', 'Cashier', 15500.00, 5),
+       (106, 'Sunan', 'Wattana', '2023-08-21', 'Promoter', 18000.00, 1),
+       (107, 'Somchit', 'Bunnag', '2019-05-05', 'Cashier', 16000.00, 2),
+       (108, 'Kaew', 'Wattana', '2021-07-09', 'Promoter', 17000.00, 3),
+       (109, 'Somjit', 'Bunnag', '2019-07-11', 'Promoter', 17000.00, 4),
+       (110, 'Amphon', 'Metharom', '2025-11-12', 'Cashier', 15500.00, 5);
 
 INSERT INTO Address
 VALUES (101, '123 Sukhumvit Rd, Bangkok'),
@@ -105,54 +113,98 @@ VALUES (101, '123 Sukhumvit Rd, Bangkok'),
        (104, '56/420 Mittraphap Rd, Khon Kaen'),
        (104, '104, 33 Khon Kaen Rd, Khon Kaen'),
        (105, '90 Hat Yai Rd, Hat Yai'),
-       (105, '12 Songkhla Rd, Hat Yai');
+       (105, '12 Songkhla Rd, Hat Yai'),
+       (106, '90 Hat Yai Rd, Hat Yai'),
+       (107, '24 Srinakarint Road, Nongbon'),
+       (108, '757/8 Rachadaphisek 18 Sam Saen Nork Huai Khwang'),
+       (109, 'Walking Street, Pattaya, Bang Lamung'),
+       (110, '80/40 Soi Sukhaphibal 5 Ramintra Tha Rang Bangkhen');
 
 INSERT INTO Email
 VALUES (101, 'waris.sri@bellinees.com'),
        (102, 'nussavas.hor@bellinees.com'),
        (103, 'warawuth.nga@bellinees.com'),
        (104, 'pongrawee.the@bellinees.com'),
-       (105, 'wachiravich.tha@bellinees.com');
+       (105, 'wachiravich.tha@bellinees.com'),
+       (106, 'sunan.wat@bellinees.com'),
+       (107, 'somchit.bun@bellinees.com'),
+       (108, 'kaew.wat@bellinees.com'),
+       (109, 'somjit.bun@bellinees.com'),
+       (110, 'amphon.met@bellinees.com');
 
 INSERT INTO PhoneNum
 VALUES (101, '081-234-5678'),
        (102, '089-876-5432'),
        (103, '082-345-6789'),
        (104, '086-543-2198'),
-       (105, '080-123-4567');
+       (105, '080-123-4567'),
+       (106, '097-531-1371'),
+       (107, '061-006-6377'),
+       (108, '014-242-4593'),
+       (109, '089-672-6631'),
+       (110, '084-233-5567');
 
--- staff ID = 101 103 105 = cashiers
+-- staff ID = 101 103 105 107 110 = cashiers
+-- staff ID = 102 104 106 108 109 = promoters
 INSERT INTO Cashier
 VALUES (101, 'VIP Service', 1),
        (103, 'POS System', 2),
        (105, 'Cash Handling', 3),
        (103, 'Customer Service', 2),
-       (105, 'Trilingual', 3);
+       (105, 'Trilingual', 3),
+       (107, 'Sales', 4),
+       (101, 'Computer Literacy', 5),
+       (105, 'Problem Solving', 6),
+       (105, 'Communication', 7),
+       (110, 'Product Knowledge', 8);
 
 INSERT INTO Promoter
 VALUES (102, 'Designer'),
-       (102, 'Coordinator'),
-       (104, 'Maintainer'),
-       (102, 'Maintainer'),
        (104, 'Coordinator'),
-       (102, 'Designer'),
-       (104, 'Designer'),
-       (102, 'Coordinator'),
-       (104, 'Maintainer'),
-       (102, 'Maintainer');
+       (106, 'Maintainer'),
+       (108, 'Designer'),
+       (109, 'Maintainer');
 
-# SELECT *
-# FROM Address;
-# SELECT *
-# FROM Branch;
-# SELECT *
-# FROM Cashier;
-# SELECT *
-# FROM Email;
-# SELECT *
-# FROM PhoneNum;
-# SELECT *
-# FROM Promoter;
-# SELECT *
-# FROM Staff;
+SELECT *
+FROM Address;
+SELECT *
+FROM Branch;
+SELECT *
+FROM Cashier;
+SELECT *
+FROM Email;
+SELECT *
+FROM PhoneNum;
+SELECT *
+FROM Promoter;
+SELECT *
+FROM Staff;
 
+/*
+Query 1:
+Retrieve all full names of the staff members who work in branches established before 2018 and earn a salary greater than 16000,
+filtering by branch establishment date and salary threshold.
+*/
+
+SELECT CONCAT(FirstName, ' ', LastName) AS StaffFullName,
+       YEAR(b.DateEstablished)          AS BranchEstablished,
+       s.Salary                         AS StaffSalary,
+       s.StfBranchID
+FROM Staff s
+         INNER JOIN Branch b ON s.StfBranchID = b.BranchID
+WHERE YEAR(b.DateEstablished) < 2018
+  AND s.Salary >= 16000
+ORDER BY BranchEstablished;
+
+/*
+Query 2:
+Retrieve all cashiers along with their branch location and supervisor name by joining the
+Staff, Cashier, and Branch tables, filtering for staff with the Cashier role.
+*/
+
+SELECT DISTINCT CONCAT(FirstName, ' ', LastName) AS FullName,
+                BranchLocation,
+                SupervisorName
+FROM Cashier c
+         INNER JOIN Staff s ON s.StaffID = c.CashierStaffID
+         INNER JOIN Branch b ON s.StfBranchID = b.BranchID;
