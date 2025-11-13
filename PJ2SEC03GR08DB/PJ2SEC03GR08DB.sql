@@ -1,21 +1,22 @@
+DROP DATABASE IF EXISTS PJ2SEC03GR08DB;
 CREATE DATABASE IF NOT EXISTS PJ2SEC03GR08DB;
 USE PJ2SEC03GR08DB;
 
-DROP TABLE IF EXISTS `Order`;
-DROP TABLE IF EXISTS Customer;
-DROP TABLE IF EXISTS Bill;
-DROP TABLE IF EXISTS Staff;
--- FIXME: [2025-11-13 01:39:51] [HY000][3730] Cannot drop table 'staff' referenced by a foreign key constraint 'FK_CashStfID' on table 'Cashier'.
-DROP TABLE IF EXISTS Cashier;
-DROP TABLE IF EXISTS Promoter;
-DROP TABLE IF EXISTS Branch;
-DROP TABLE IF EXISTS Promotion;
-DROP TABLE IF EXISTS Promotion_Promoter;
-DROP TABLE IF EXISTS OrderProduct;
-DROP TABLE IF EXISTS Promoter_Promotion_Usage;
-DROP TABLE IF EXISTS Order_TotalAmount;
-DROP TABLE IF EXISTS Promotion_AvailableItem;
-DROP TABLE IF EXISTS Product;
+# DROP TABLE IF EXISTS Branch;
+# -- FIXME: [HY000][3730] Cannot drop table 'branch' referenced by a foreign key constraint 'FK_StfBranchID' on table 'Staff'
+# DROP TABLE IF EXISTS Staff;
+# DROP TABLE IF EXISTS Cashier;
+# DROP TABLE IF EXISTS `Order`;
+# DROP TABLE IF EXISTS Customer;
+# DROP TABLE IF EXISTS Bill;
+# DROP TABLE IF EXISTS Promoter;
+# DROP TABLE IF EXISTS Promotion;
+# DROP TABLE IF EXISTS Promotion_Promoter;
+# DROP TABLE IF EXISTS Product;
+# DROP TABLE IF EXISTS OrderProduct;
+# DROP TABLE IF EXISTS Promoter_Promotion_Usage;
+# DROP TABLE IF EXISTS Order_TotalAmount;
+# DROP TABLE IF EXISTS Promotion_AvailableItem;
 
 CREATE TABLE Branch (
     BranchID        INT(7) PRIMARY KEY,
