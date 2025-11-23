@@ -192,7 +192,7 @@ List all full names of cashiers along with their service skills and cashier numb
 
 SELECT CONCAT(StaffFirstName, ' ', StaffLastName) AS StaffFullName, CashierServiceSkill, CashierNumber
 FROM Staff s
-         INNER JOIN Cashier c ON s.StaffID = c.CashierStaffID
+         INNER JOIN Cashier c ON s.StaffID = c.CashierStaffID;
 
 /*
 Query 5:
@@ -208,4 +208,4 @@ SELECT BranchLocation, Email, PromoterRole
 FROM Branch b
          LEFT OUTER JOIN Staff s ON b.BranchID = s.StaffBranchID
          RIGHT OUTER JOIN Promoter p ON s.StaffID = p.PromoterStaffID
-WHERE PromoterStaffID IS NOT NULL ORDER BY b.BranchLocation, Email;
+ORDER BY b.BranchLocation, Email;
