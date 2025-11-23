@@ -2,7 +2,10 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/L14_6788112.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/L15_6788112.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/PJ2SEC03GR08DB.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/isolation-level-session1.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/isolation-level-session2.sql" dialect="MySQL" />
     <file url="PROJECT" dialect="MySQL" />
   </component>
 </project>
