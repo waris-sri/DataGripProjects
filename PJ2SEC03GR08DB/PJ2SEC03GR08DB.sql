@@ -6,30 +6,38 @@
 -- ! When Relational Schema is stable, normalize it to 3NF for full score !
 -- ------------------------------------------------------------------------
 
--- NOTE: --------------------------------------------------------------
--- ! Master Tables >= 10 records and Transaction Tables >= 30 records !
--- --------------------------------------------------------------------
-
 DROP DATABASE IF EXISTS PJ2SEC03GR08DB;
 CREATE DATABASE IF NOT EXISTS PJ2SEC03GR08DB;
 USE PJ2SEC03GR08DB;
+
+/*
+TRANSACTIONAL (the rest are MASTER tables:
+Orders
+OrderProduct
+Bill
+PromotionPromoter*/
 
 -- Beam
 DROP TABLE IF EXISTS Branch;
 DROP TABLE IF EXISTS Staff;
 DROP TABLE IF EXISTS Cashier;
 DROP TABLE IF EXISTS Promoter;
+
 -- Bamm
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS Customer;
+
 -- Sun
 DROP TABLE IF EXISTS Products;
 DROP TABLE IF EXISTS OrderProduct;
+
 -- M
 DROP TABLE IF EXISTS Bill;
+
 -- Newly Added
 DROP TABLE IF EXISTS Promotion;
 DROP TABLE IF EXISTS PromotionPromoter;
+
 
 /* ====================================== BEAM DDL SCOPE STARTS ====================================== */
 CREATE TABLE Branch (
@@ -108,10 +116,11 @@ Binary M:N connectivity: Create a new relation, then inherit M’s & N’s PKs a
 CREATE TABLE OrderProduct (
     OP_ProductID     CHAR(7) NOT NULL,
     OP_OrderID       CHAR(7) NOT NULL,
-    OP_OrderQuantity INT,
+    OP_OrderQuantity INT     NOT NULL,
     CONSTRAINT PK_OrderProduct PRIMARY KEY (OP_ProductID, OP_OrderID),
     CONSTRAINT FK_OP_ProductID FOREIGN KEY (OP_ProductID) REFERENCES Products (ProductID),
-    CONSTRAINT FK_OP_OrderID FOREIGN KEY (OP_OrderID) REFERENCES Orders (OrderID)
+    CONSTRAINT FK_OP_OrderID FOREIGN KEY (OP_OrderID) REFERENCES Orders (OrderID),
+    CONSTRAINT CHK_OP_OrderQuantity CHECK (OP_OrderQuantity >= 1 AND OP_OrderQuantity <= 100)
 );
 /* ====================================== SUN DDL SCOPE ENDS ====================================== */
 
@@ -122,8 +131,10 @@ CREATE TABLE Bill (
     BillTime          TIME     NOT NULL,
     BillTaxID         CHAR(13) NOT NULL,
     BillCreditCardNum CHAR(16),
+    BillBranchID      CHAR(4)  NOT NULL,
     BillOrderID       CHAR(7)  NOT NULL,
-    CONSTRAINT FK_BillOrderID FOREIGN KEY (BillOrderID) REFERENCES Orders (OrderID)
+    CONSTRAINT FK_BillOrderID FOREIGN KEY (BillOrderID) REFERENCES Orders (OrderID),
+    CONSTRAINT FK_BillBranchID FOREIGN KEY (BillBranchID) REFERENCES Branch (BranchID)
 );
 /* ====================================== M DDL SCOPE ENDS ====================================== */
 
@@ -131,7 +142,7 @@ CREATE TABLE Bill (
 CREATE TABLE Promotion (
     PromotionID         CHAR(7)      NOT NULL PRIMARY KEY,
     EligibilityCriteria VARCHAR(100) NOT NULL,
-    PromotionName       VARCHAR(20)  NOT NULL,
+    PromotionName       VARCHAR(40)  NOT NULL,
     PromotionStartDate  DATE         NOT NULL,
     PromotionEndDate    DATE         NOT NULL
 );
@@ -146,91 +157,6 @@ CREATE TABLE PromotionPromoter (
     CONSTRAINT FK_PP_PromoterStaffID FOREIGN KEY (PP_PromoterStaffID) REFERENCES Promoter (PromoterStaffID)
 );
 /* ================================================================================================ */
-
-INSERT INTO Products
-VALUES ('4795980', 420, 29.99, 120, 'Yellow Submarine (22 oz)', '2025-12-01'),
-       ('7989971', 990, 15.50, 75, 'Heritage Croissant', '2025-12-14'),
-       ('4489972', 890, 40.75, 100, 'Bellinee’s Signature Coffee (16 oz)', '2025-12-05'),
-       ('4434442', 750, 75.00, 225, 'Croissant Nutella', '2025-12-20'),
-       ('9832742', 677, 99.99, 350, 'Yuzu Twist (16 oz)', '2025-12-03');
-
-INSERT INTO Orders
-VALUES ('7392641', '13:01:00', '2024-05-11', 'COMPLETED', '6788023', '101', 89),
-       ('7396713', '14:30:00', '2024-05-12', 'COMPLETED', '6788130', '102', 50),
-       ('5820582', '09:15:00', '2024-05-13', 'INCOMPLETE', '6788112', '103', 45),
-       ('6767676', '18:05:00', '2024-05-14', 'COMPLETED', '6788200', '104', 50),
-       ('4927471', '10:00:00', '2024-05-15', 'INCOMPLETE', '6788131', '105', 35);
-
-INSERT INTO OrderProduct
-VALUES ('4795980', '7392641', 9),
-       ('7989971', '7396713', 2),
-       ('4489972', '5820582', 4),
-       ('4434442', '6767676', 3),
-       ('9832742', '4927471', 1),
-       ('4795980', '4082651', 1),
-       ('7989971', '1245379', 2),
-       ('4489972', '2018382', 4),
-       ('4434442', '9876543', 2),
-       ('9832742', '1357924', 1);
-
-INSERT INTO Customer
-VALUES ('6788023', 'Nussavas', 'Horchatnukul', '2005-06-08', 'M'),
-       ('6788112', 'Waris', 'Sripathum', '2005-10-22', 'F'),
-       ('6788130', 'Koony', 'Pongrawee', '2016-01-05', 'M'),
-       ('6788291', 'Wachira', 'Chatmonkol', '2005-01-01', 'F'),
-       ('6788921', 'Punrapop', 'Prach', '2005-12-31', 'F'),
-       ('6788371', 'Poppumm', 'Pummpob', '2010-03-22', 'M'),
-       ('6788026', 'Rachine', 'Wach', '2020-12-31', 'F'),
-       ('6788145', 'Rawit', 'Ralia', '2014-12-31', 'M'),
-       ('6788131', 'Pakpaphon', 'Sueqae', '2000-05-21', 'F'),
-       ('6788200', 'Wuthwara', 'Leungam', '2005-09-30', 'M'),
-       ('6788254', 'Kittipat', 'Sangwiroj', '2005-03-14', 'M'),
-       ('6788291', 'Chalita', 'Boonsiri', '2006-07-09', 'F'),
-       ('6788320', 'Natthawat', 'Wiriyakul', '2005-11-18', 'M'),
-       ('6788342', 'Pimchanok', 'Rattanaporn', '2006-02-27', 'F'),
-       ('6788405', 'Jirayu', 'Suthamchai', '2005-08-03', 'M');
-
-INSERT INTO Orders
-VALUES ('7392641', '16:45:03', '2025-12-08', 'INCOMPLETE', '6788023', '101', 10),
-       ('7396713', '20:32:55', '2025-03-17', 'COMPLETED', '6788130', '102', 12),
-       ('5820582', '17:56:49', '2024-04-21', 'COMPLETED', '6788112', '103', 2),
-       ('6767676', '13:28:52', '2025-11-20', 'INCOMPLETE', '6788200', '104', 1),
-       ('4927471', '12:40:54', '2025-06-07', 'COMPLETED', '6788131', '105', 6),
-       ('4082651', '19:40:12', '2024-08-09', 'COMPLETED', '6788023', '106', 2),
-       ('1245379', '15:25:35', '2025-09-11', 'COMPLETED', '6788112', '107', 5),
-       ('2018382', '16:39:29', '2024-08-30', 'COMPLETED', '6788130', '108', 44),
-       ('9876543', '12:43:03', '2023-01-19', 'COMPLETED', '6788023', '109', 67),
-       ('1357924', '10:23:00', '2025-12-02', 'COMPLETED', '6788200', '110', 7),
-       ('7400101', '11:23:45', '2025-03-10', 'COMPLETED', '6788023', '101', 77),
-       ('7400102', '15:40:22', '2024-11-18', 'INCOMPLETE', '6788112', '102', 9),
-       ('7400103', '09:12:54', '2025-07-02', 'COMPLETED', '6788130', '103', 10),
-       ('7400104', '18:55:13', '2024-09-21', 'COMPLETED', '6788291', '104', 12),
-       ('7400105', '14:01:08', '2025-04-14', 'INCOMPLETE', '6788921', '105', 12),
-       ('7400106', '07:25:34', '2024-06-10', 'COMPLETED', '6788371', '106', 15),
-       ('7400107', '16:19:45', '2023-12-19', 'COMPLETED', '6788026', '107', 3),
-       ('7400108', '10:10:10', '2025-10-12', 'COMPLETED', '6788145', '108', 22),
-       ('7400109', '20:45:59', '2024-03:28', 'INCOMPLETE', '6788131', '109', 21),
-       ('7400110', '12:33:18', '2025-11-03', 'COMPLETED', '6788200', '110', 8),
-       ('7400111', '13:22:44', '2024-05-12', 'COMPLETED', '6788023', '101', 3),
-       ('7400112', '17:58:01', '2025-01-30', 'COMPLETED', '6788112', '102', 6),
-       ('7400113', '19:49:33', '2025-08-18', 'INCOMPLETE', '6788130', '103', 4),
-       ('7400114', '08:20:47', '2024-10-06', 'COMPLETED', '6788291', '104', 32),
-       ('7400115', '22:11:39', '2025-09-09', 'COMPLETED', '6788921', '105', 12),
-       ('7400116', '06:59:11', '2024-07-25', 'COMPLETED', '6788371', '106', 14),
-       ('7400117', '21:30:07', '2023-11-09', 'INCOMPLETE', '6788026', '107', 18),
-       ('7400118', '15:13:21', '2025-06-16', 'COMPLETED', '6788145', '108', 13),
-       ('7400119', '09:44:55', '2024-04-04', 'COMPLETED', '6788131', '109', 3),
-       ('7400120', '18:18:18', '2025-12-05', 'INCOMPLETE', '6788200', '110', 2),
-       ('2025212', '09:42:00', '2025-02-12', 'COMPLETED', '6788254', '109', 1),
-       ('2020215', '14:18:00', '2025-02-15', 'COMPLETED', '6788254', '107', 1),
-       ('2050216', '11:05:00', '2025-02-16', 'COMPLETED', '6788291', '108', 1),
-       ('2250223', '15:17:00', '2025-02-23', 'COMPLETED', '6788291', '105', 1),
-       ('2250218', '16:33:00', '2025-02-18', 'COMPLETED', '6788320', '104', 1),
-       ('2025219', '10:11:00', '2025-02-19', 'COMPLETED', '6788320', '103', 1),
-       ('2020220', '13:49:00', '2025-02-20', 'COMPLETED', '6788342', '102', 1),
-       ('2050221', '09:58:00', '2025-02-21', 'COMPLETED', '6788342', '102', 1),
-       ('2025022', '17:26:00', '2025-02-22', 'COMPLETED', '6788405', '110', 1),
-       ('2025224', '18:02:00', '2025-02-24', 'COMPLETED', '6788405', '101', 1);
 
 INSERT INTO Branch
 VALUES ('0001', 'Bangkok Central', '2015-03-01', 'Somchai Chaiyaporn'),
@@ -312,26 +238,214 @@ VALUES ('111', 'Designer'),
        ('119', 'Designer'),
        ('120', 'Maintainer');
 
+INSERT INTO Promotion (PromotionID, EligibilityCriteria, PromotionName, PromotionStartDate, PromotionEndDate)
+VALUES ('PROM001', 'All customers who spend over 1,000 THB', 'Spend1KGet10%', '2025-06-01', '2025-06-30'),
+       ('PROM002', 'New customers only', 'Welcome20%', '2025-07-01', '2025-07-31'),
+       ('PROM003', 'All members of the loyalty program', 'Loyalty15%', '2025-08-01', '2025-08-15'),
+       ('PROM004', 'Orders containing at least 2 croissants', 'DoubleCroissantFreeCoffee', '2025-08-10', '2025-08-31'),
+       ('PROM005', 'Visit between 14:00–17:00 (Happy Hour)', 'AfternoonDelight', '2025-09-01', '2025-09-30'),
+       ('PROM006', 'Buy 1 get 1 on all espresso drinks', 'EspressoBOGO', '2025-09-15', '2025-09-22'),
+       ('PROM007', 'All purchases at Pinklao Branch', 'PinklaoExclusive5%', '2025-10-01', '2025-10-10'),
+       ('PROM008', 'Orders of iced drinks only', 'CoolDown10%', '2025-10-11', '2025-10-31'),
+       ('PROM009', 'Purchase any pastry and drink together', 'PastryCombo20%', '2025-11-01', '2025-11-15'),
+       ('PROM010', 'Members who refer a friend', 'ReferAFriendFreeCroissant', '2025-11-16', '2025-11-30');
+
+INSERT INTO PromotionPromoter (PP_PromotionID, PP_PromoterStaffID)
+VALUES ('PROM001', '111'),
+       ('PROM001', '112'),
+       ('PROM001', '113'),
+       ('PROM002', '114'),
+       ('PROM002', '115'),
+       ('PROM002', '116'),
+       ('PROM003', '117'),
+       ('PROM003', '118'),
+       ('PROM003', '119'),
+       ('PROM004', '120'),
+       ('PROM004', '111'),
+       ('PROM004', '112'),
+       ('PROM005', '113'),
+       ('PROM005', '114'),
+       ('PROM005', '115'),
+       ('PROM006', '116'),
+       ('PROM006', '117'),
+       ('PROM006', '118'),
+       ('PROM007', '119'),
+       ('PROM007', '120'),
+       ('PROM007', '111'),
+       ('PROM008', '112'),
+       ('PROM008', '113'),
+       ('PROM008', '114'),
+       ('PROM009', '115'),
+       ('PROM009', '116'),
+       ('PROM009', '117'),
+       ('PROM010', '118'),
+       ('PROM010', '119'),
+       ('PROM010', '120'),
+       ('PROM010', '111');
+
+INSERT INTO Customer
+VALUES ('6788023', 'Nussavas', 'Horchatnukul', '2005-06-08', 'M'),
+       ('6788112', 'Waris', 'Sripathum', '2005-10-22', 'F'),
+       ('6788130', 'Koony', 'Pongrawee', '2016-01-05', 'M'),
+       ('6788291', 'Wachira', 'Chatmonkol', '2005-01-01', 'F'),
+       ('6788921', 'Punrapop', 'Prach', '2005-12-31', 'F'),
+       ('6788371', 'Poppumm', 'Pummpob', '2010-03-22', 'M'),
+       ('6788026', 'Rachine', 'Wach', '2020-12-31', 'F'),
+       ('6788145', 'Rawit', 'Ralia', '2014-12-31', 'M'),
+       ('6788131', 'Pakpaphon', 'Sueqae', '2000-05-21', 'F'),
+       ('6788200', 'Wuthwara', 'Leungam', '2005-09-30', 'M'),
+       ('6788254', 'Kittipat', 'Sangwiroj', '2005-03-14', 'M'),
+       ('6788241', 'Chalita', 'Boonsiri', '2006-07-09', 'F'),
+       ('6788320', 'Natthawat', 'Wiriyakul', '2005-11-18', 'M'),
+       ('6788342', 'Pimchanok', 'Rattanaporn', '2006-02-27', 'F'),
+       ('6788405', 'Jirayu', 'Suthamchai', '2005-08-03', 'M');
+
+INSERT INTO Orders
+VALUES ('7392641', '16:45:03', '2025-12-08', 'INCOMPLETE', '6788023', '101', 10),
+       ('7396713', '20:32:55', '2025-03-17', 'COMPLETED', '6788130', '102', 12),
+       ('5820582', '17:56:49', '2024-04-21', 'COMPLETED', '6788112', '103', 2),
+       ('6767676', '13:28:52', '2025-11-20', 'INCOMPLETE', '6788200', '104', 1),
+       ('4927471', '12:40:54', '2025-06-07', 'COMPLETED', '6788131', '105', 6),
+       ('4082651', '19:40:12', '2024-08-09', 'COMPLETED', '6788023', '106', 2),
+       ('1245379', '15:25:35', '2025-09-11', 'COMPLETED', '6788112', '107', 5),
+       ('2018382', '16:39:29', '2024-08-30', 'COMPLETED', '6788130', '108', 44),
+       ('9876543', '12:43:03', '2023-01-19', 'COMPLETED', '6788023', '109', 67),
+       ('1357924', '10:23:00', '2025-12-02', 'COMPLETED', '6788200', '110', 7),
+       ('7400101', '11:23:45', '2025-03-10', 'COMPLETED', '6788023', '101', 77),
+       ('7400102', '15:40:22', '2024-11-18', 'INCOMPLETE', '6788112', '102', 9),
+       ('7400103', '09:12:54', '2025-07-02', 'COMPLETED', '6788130', '103', 10),
+       ('7400104', '18:55:13', '2024-09-21', 'COMPLETED', '6788291', '104', 12),
+       ('7400105', '14:01:08', '2025-04-14', 'INCOMPLETE', '6788921', '105', 12),
+       ('7400106', '07:25:34', '2024-06-10', 'COMPLETED', '6788371', '106', 15),
+       ('7400107', '16:19:45', '2023-12-19', 'COMPLETED', '6788026', '107', 3),
+       ('7400108', '10:10:10', '2025-10-12', 'COMPLETED', '6788145', '108', 22),
+       ('7400109', '20:45:59', '2024-03-28', 'INCOMPLETE', '6788131', '109', 21),
+       ('7400110', '12:33:18', '2025-11-03', 'COMPLETED', '6788200', '110', 8),
+       ('7400111', '13:22:44', '2024-05-12', 'COMPLETED', '6788023', '101', 3),
+       ('7400112', '17:58:01', '2025-01-30', 'COMPLETED', '6788112', '102', 6),
+       ('7400113', '19:49:33', '2025-08-18', 'INCOMPLETE', '6788130', '103', 4),
+       ('7400114', '08:20:47', '2024-10-06', 'COMPLETED', '6788291', '104', 32),
+       ('7400115', '22:11:39', '2025-09-09', 'COMPLETED', '6788921', '105', 12),
+       ('7400116', '06:59:11', '2024-07-25', 'COMPLETED', '6788371', '106', 14),
+       ('7400117', '21:30:07', '2023-11-09', 'INCOMPLETE', '6788026', '107', 18),
+       ('7400118', '15:13:21', '2025-06-16', 'COMPLETED', '6788145', '108', 13),
+       ('7400119', '09:44:55', '2024-04-04', 'COMPLETED', '6788131', '109', 3),
+       ('7400120', '18:18:18', '2025-12-05', 'INCOMPLETE', '6788200', '110', 2),
+       ('2025212', '09:42:00', '2025-02-12', 'COMPLETED', '6788254', '109', 5),
+       ('2020215', '14:18:00', '2025-02-15', 'COMPLETED', '6788254', '107', 1),
+       ('2050216', '11:05:00', '2025-02-16', 'COMPLETED', '6788291', '108', 3),
+       ('2250223', '15:17:00', '2025-02-23', 'COMPLETED', '6788291', '105', 4),
+       ('2250218', '16:33:00', '2025-02-18', 'COMPLETED', '6788320', '104', 2),
+       ('2025219', '10:11:00', '2025-02-19', 'COMPLETED', '6788320', '103', 4),
+       ('2020220', '13:49:00', '2025-02-20', 'COMPLETED', '6788342', '102', 1),
+       ('2050221', '09:58:00', '2025-02-21', 'COMPLETED', '6788342', '102', 3),
+       ('2025022', '17:26:00', '2025-02-22', 'COMPLETED', '6788405', '110', 4),
+       ('2025224', '18:02:00', '2025-02-24', 'COMPLETED', '6788405', '101', 2),
+       ('7392331', '13:01:00', '2024-05-11', 'COMPLETED', '6788023', '101', 89),
+       ('1232299', '14:30:00', '2024-05-12', 'COMPLETED', '6788130', '102', 50),
+       ('5866662', '09:15:00', '2024-05-13', 'INCOMPLETE', '6788112', '103', 45),
+       ('6754356', '18:05:00', '2024-05-14', 'COMPLETED', '6788200', '104', 50),
+       ('4092333', '10:00:00', '2024-05-15', 'INCOMPLETE', '6788131', '105', 35);
+
+INSERT INTO Products
+VALUES ('4795980', 420, 29.99, 120, 'Yellow Submarine 22oz', '2025-12-01'),
+       ('7989971', 990, 15.50, 75, 'Heritage Croissant', '2025-12-14'),
+       ('4489972', 890, 40.75, 100, 'Bellinee’s Signature Coffee 16oz', '2025-12-05'),
+       ('4434442', 750, 75.00, 225, 'Croissant Nutella', '2025-12-20'),
+       ('7324521', 990, 15.50, 75, 'Hot Matcha Latte 12oz', '2025-12-14'),
+       ('0829342', 890, 40.75, 100, 'Coconut Blossom Coffee 22oz', '2025-12-05'),
+       ('3242344', 750, 95.00, 225, 'Red Velvet Cheese Croissant', '2025-12-20'),
+       ('1302933', 990, 35.50, 75, 'Butter Croissant', '2025-12-14'),
+       ('9817245', 890, 30.75, 100, 'Iced Chocolate 16oz', '2025-12-05'),
+       ('4431442', 750, 75.00, 225, 'Mini Creamy Croissant', '2025-12-20'),
+       ('9832742', 677, 30.00, 350, 'Ham Cheese Croissant', '2025-12-03');
+
+INSERT INTO OrderProduct
+VALUES ('4795980', '7392641', 9),
+       ('7989971', '7396713', 2),
+       ('4489972', '5820582', 4),
+       ('4434442', '6767676', 3),
+       ('3242344', '4927471', 1),
+       ('4795980', '4082651', 1),
+       ('7989971', '1245379', 2),
+       ('1302933', '2018382', 4),
+       ('7324521', '9876543', 2),
+       ('9832742', '1357924', 1), -- 10
+       ('1302933', '7400119', 9),
+       ('9817245', '7400120', 2),
+       ('4431442', '2025212', 4),
+       ('0829342', '2020215', 3),
+       ('7324521', '2050216', 1),
+       ('3242344', '2250223', 1),
+       ('7989971', '2250218', 2),
+       ('4489972', '2025219', 4),
+       ('3242344', '2020220', 2),
+       ('9817245', '2050221', 1), -- 20
+       ('9817245', '7400101', 9),
+       ('9817245', '7400102', 2),
+       ('4489972', '7400103', 4),
+       ('0829342', '7400104', 3),
+       ('9832742', '7400105', 1),
+       ('0829342', '7400106', 1),
+       ('7989971', '7400107', 2),
+       ('4489972', '7400108', 4),
+       ('4431442', '7400109', 2),
+       ('9832742', '7400110', 1);
+
 INSERT INTO Bill
-VALUES ('2025021', '2025-02-12', '09:50:40', '4719663416897', '375642301946900', 20250212),
-       ('2025022', '2025-02-15', '14:25:50', '2801002557363', NULL, 20250215),
-       ('2025023', '2025-02-16', '11:12:23', '5449857629536', '4426506860939960', 20250216),
-       ('2025024', '2025-02-23', '15:25:34', '8490347149997', '371871906048021', 20250223),
-       ('2025025', '2025-02-18', '16:40:23', '3549535298143', '3569967390400049', 20250218),
-       ('2025026', '2025-02-19', '10:20:11', '8859221704732', NULL, 20250219),
-       ('2025027', '2025-02-20', '13:55:34', '9263943350951', NULL, 20250220),
-       ('2025028', '2025-02-21', '10:05:53', '7298316773550', '4889267867168411', 20250221),
-       ('2025029', '2025-02-22', '17:32:12', '9806252711671', NULL, 20250222),
-       ('2025030', '2025-02-24', '18:10:19', '5902084742334', NULL, 20250224);
+VALUES ('2025021', '2025-02-12', '09:50:40', '4719663416897', '375642301946900', '0001', '7396713'),
+       ('2025022', '2025-02-15', '14:25:50', '2801002557363', NULL, '0002', '6754356'),
+       ('2025023', '2025-02-16', '11:12:23', '5449857629536', '4426506860939960', '0003', '7400118'),
+       ('2025024', '2025-02-23', '15:25:34', '8490347149997', '371871906048021', '0004', '7400120'),
+       ('2025025', '2025-02-18', '16:40:23', '3549535298143', '3569967390400049', '0005', '2025219'),
+       ('2025026', '2025-02-19', '10:20:11', '8859221704732', NULL, '0005', '9876543'),
+       ('2025027', '2025-02-20', '13:55:34', '9263943350951', NULL, '0001', '4082651'),
+       ('2025028', '2025-02-21', '10:05:53', '7298316773550', '4889267867168411', '0002', '7400102'),
+       ('2025029', '2025-02-22', '17:32:12', '9806252711671', NULL, '0003', '7400119'),
+       ('2025030', '2025-02-24', '18:10:19', '5902084742334', NULL, '0004', '1357924'),
+       ('2025031', '2025-02-25', '09:22:31', '6409931028745', NULL, '0001', '7400103'),
+       ('2025032', '2025-02-25', '10:41:12', '9045523189074', '4539217601123456', '0002', '2250218'),
+       ('2025033', '2025-02-25', '11:58:44', '2198456773012', NULL, '0003', '2250223'),
+       ('2025034', '2025-02-26', '12:33:29', '3509941285531', '6011983745562345', '0004', '7400111'),
+       ('2025035', '2025-02-26', '13:47:51', '7782015649320', NULL, '0005', '7400119'),
+       ('2025036', '2025-02-26', '14:59:40', '9031284796511', '374829174553210', '0001', '2020215'),
+       ('2025037', '2025-02-27', '09:15:27', '5598137402249', NULL, '0002', '7400115'),
+       ('2025038', '2025-02-27', '10:24:33', '1249855309127', '4539876210456712', '0003', '2025212'),
+       ('2025039', '2025-02-27', '11:41:59', '9785442137754', NULL, '0004', '7400109'),
+       ('2025040', '2025-02-27', '12:53:18', '6872001458962', '370019284556782', '0005', '7400116'),
+       ('2025041', '2025-02-28', '09:09:15', '9015528734102', NULL, '0001', '7400110'),
+       ('2025042', '2025-02-28', '10:18:22', '2784159906743', '4620183945567788', '0002', '7400108'),
+       ('2025043', '2025-02-28', '11:40:10', '5400928374105', NULL, '0003', '7400104'),
+       ('2025044', '2025-03-01', '13:11:47', '7993152048893', '6011123498765432', '0004', '1357924'),
+       ('2025045', '2025-03-01', '14:44:20', '6938015249073', NULL, '0005', '7400112'),
+       ('2025046', '2025-03-01', '15:59:33', '8224901376412', NULL, '0001', '9876543'),
+       ('2025047', '2025-03-02', '09:33:51', '3584197509822', '4867201983471122', '0002', '6767676'),
+       ('2025048', '2025-03-02', '10:58:02', '9057732104581', NULL, '0003', '7400101'),
+       ('2025049', '2025-03-02', '12:25:40', '1649205783129', '372014598732110', '0004', '4927471'),
+       ('2025050', '2025-03-02', '13:47:58', '7305921845013', NULL, '0005', '7400105');
 
 SELECT *
 FROM Branch;
 SELECT *
 FROM Staff;
 SELECT *
+FROM Cashier;
+SELECT *
 FROM Promoter;
 SELECT *
-FROM Cashier;
+FROM Orders;
+SELECT *
+FROM Customer;
+SELECT *
+FROM Products;
+SELECT *
+FROM OrderProduct;
+SELECT *
+FROM Bill;
+SELECT *
+FROM Promotion;
+SELECT *
+FROM PromotionPromoter;
 
 /* =================================================== BEAM QUERIES =================================================== */
 
@@ -416,6 +530,7 @@ FROM Cashier;
 /*
 Show the customer orders that are in a completed status. (Customer + Order)
 */
+/*Bamm Q1*/
 SELECT c.CustomerID,
        CONCAT(c.CustFirstName, ' ', c.CustLastName) AS CustomerName,
        o.OrderID,
@@ -449,8 +564,11 @@ SELECT StaffID,
 FROM Staff s
          INNER JOIN Cashier c ON s.StaffID = c.CashierStaffID
          INNER JOIN Orders o ON c.CashierStaffID = o.OrderCashierStaffID
-WHERE s.Salary > AVG(Salary) -- FIXME: Error "Aggregate calls are not allowed here"
-  AND o.OrderStatus = 'COMPLETED'
+WHERE s.Salary > (
+                     SELECT AVG(Salary)
+                     FROM Staff
+                     )
+  AND o.OrderStatus = 'INCOMPLETE'
 ORDER BY o.OrderDate;
 
 /*
@@ -470,19 +588,19 @@ FROM Staff s
 WHERE pr.PromoterRole = 'Designer'
 ORDER BY s.StaffID;
 
--- FIXME: Fix the errors ("Unable to resolve column names.")
+
 /*Show all of the customer and product names that they have ordered before Dec 2025 (Customer + Order+OrderProduct+Product)*/
-SELECT CustomerID,
-       CONCAT(CustFirstName, ' ', CustLastName) AS CustomerName,
-       ORDERID,
-       ORDERDATE,
+SELECT c.CustomerID,
+       CONCAT(c.CustFirstName, ' ', c.CustLastName) AS CustomerName,
+       o.OrderID,
+       o.OrderDate,
        OP_ProductID,
-       PRODUCTNAME
+       ProductName
 FROM Customer c
-         LEFT OUTER JOIN ORDERS.O ON c.CustomerID = O.ORDERCUSTID
-         RIGHT OUTER JOIN OrderProduct op ON O.ORDERID = op.OP_OrderID
-         LEFT OUTER JOIN PRODUCT p ON op.OP_ProductID = p.ProductID
-WHERE O.ORDERDATE < '2025-12-1' -- we can do this instead of using DATEDIFF()?
+         LEFT OUTER JOIN Orders o ON c.CustomerID = o.OrderCustID
+         LEFT OUTER JOIN OrderProduct op ON o.OrderID = op.OP_OrderID
+         LEFT OUTER JOIN Products p ON op.OP_ProductID = p.ProductID
+WHERE o.OrderDate < '2025-12-01'
 ORDER BY CustomerID;
 
 /* =================================================== SUN QUERIES =================================================== */
@@ -524,24 +642,25 @@ FROM Products AS p
          LEFT JOIN OrderProduct AS op ON p.ProductID = op.OP_ProductID;
 
 /* =================================================== M QUERIES =================================================== */
--- FIXME: Fix the errors
+-- From workshop (corrected)
 SELECT OrderID,
        OrderQuantity,
        OrderDate,
        OrderStatus
 FROM Orders
-WHERE OrderStatus = 'PAID'
-  AND OrderQuantity > 500
+WHERE OrderStatus = 'COMPLETED'
+  AND OrderQuantity > 20
   AND OrderDate >= '2025-03-02'
 ORDER BY OrderDate, OrderQuantity DESC;
 
-SELECT b.BillID,
-       c.CUSTOMERNAME,
+-- From workshop (corrected)
+SELECT b.BillOrderID,
+       CONCAT(CustFirstName, ' ', CustLastName) AS CustomerName,
        b.BillDate,
-       b.BRANCHNAME,
+       b.BillBranchID,
        o.OrderDate,
        o.OrderQuantity
 FROM Bill b
-         JOIN Orders o ON b.ORDERID = o.OrderID
-         JOIN Customer c ON o.CUSTOMERID = c.CustomerID
-ORDER BY b.BillDate, c.CUSTOMERNAME;
+         JOIN Orders o ON b.BillOrderID = o.OrderID
+         JOIN Customer c ON o.OrderCustID = c.CustomerID
+ORDER BY b.BillDate, CustomerName;
