@@ -65,11 +65,58 @@ CREATE TABLE Orders (
     OrderStatus         VARCHAR(20) NOT NULL,
     OrderCustID         CHAR(7)     NOT NULL,
     OrderCashierStaffID CHAR(3)     NOT NULL,
+    OrderQuantity       INT         NOT NULL,-- Newly added and adapted from Sun's
     CONSTRAINT FK_OrderCustID FOREIGN KEY (OrderCustID) REFERENCES Customer (CustomerID),
     CONSTRAINT FK_OrderCashierStaffID FOREIGN KEY (OrderCashierStaffID) REFERENCES Cashier (CashierStaffID),
     CONSTRAINT CHK_OrderStatus CHECK (OrderStatus IN ('COMPLETED', 'INCOMPLETE'))
 );
 /* ====================================== BAMM DDL SCOPE ENDS ====================================== */
+
+/* ====================================== SUN DDL SCOPE STARTS ====================================== */
+CREATE TABLE Products (
+    ProductID     CHAR(7)       NOT NULL PRIMARY KEY,
+    ProductAmount INT           NOT NULL,
+    Price         DECIMAL(5, 2) NOT NULL,
+    Calories      INT           NOT NULL,
+    ProductName   VARCHAR(20)   NOT NULL,
+    ExpiryDate    DATE          NOT NULL
+);
+
+CREATE TABLE OrderProduct (
+    OP_ProductID     CHAR(7) NOT NULL,
+    OP_OrderID       CHAR(7) NOT NULL,
+    OP_OrderQuantity INT,
+    CONSTRAINT PK_OP_ProductOrderID PRIMARY KEY (OP_ProductID, OP_OrderID),
+    CONSTRAINT FK_OP_ProductID FOREIGN KEY (OP_ProductID) REFERENCES Products (ProductID),
+    CONSTRAINT FK_OP_OrderID FOREIGN KEY (OP_OrderID) REFERENCES Orders (OrderID)
+);
+/* ====================================== SUN DDL SCOPE ENDS ====================================== */
+
+INSERT INTO Products
+VALUES ('444-7-7998-8997-0', 150, 29.99, 120, 'fruity', '2025-01-01'),
+       ('444-7-7998-8997-1', 500, 15.50, 75, 'citrus', '2025-01-01'),
+       ('444-7-7998-8997-2', 200, 8.75, 100, 'oceanic', '2025-01-01'),
+       ('444-7-7998-8997-3', 750, 175.00, 95, 'earthy', '2025-01-01'),
+       ('444-7-7998-8997-4', 250, 99.99, 350, 'great', '2025-01-01');
+
+INSERT INTO Orders
+VALUES ('7392641', '13:01:00', '2024-05-11', 'COMPLETED', '6788023', '101', 89),
+       ('7396713', '14:30:00', '2024-05-12', 'COMPLETED', '6788130', '102', 50),
+       ('5820582', '09:15:00', '2024-05-13', 'INCOMPLETE', '6788112', '103', 45),
+       ('6767676', '18:05:00', '2024-05-14', 'COMPLETED', '6788200', '104', 50),
+       ('4927471', '10:00:00', '2024-05-15', 'INCOMPLETE', '6788131', '105', 35);
+
+INSERT INTO OrderProduct (OP_ProductID, OP_OrderID, OP_OrderQuantity)
+VALUES ('444-7-7998-8997-4', '7392641', 9),
+       ('444-7-7998-8997-0', '7396713', 2),
+       ('444-7-7998-8997-1', '5820582', 4),
+       ('444-7-7998-8997-2', '6767676', 3),
+       ('444-7-7998-8997-0', '4927471', 1),
+       ('444-7-7998-8997-1', '4082651', 1),
+       ('444-7-7998-8997-3', '1245379', 2),
+       ('444-7-7998-8997-2', '2018382', 4),
+       ('444-7-7998-8997-2', '9876543', 2),
+       ('444-7-7998-8997-1', '1357924', 1);
 
 INSERT INTO Customer
 VALUES ('6788023', 'Nussavas', 'Horchatnukul', '2005-06-08', 'M'),
@@ -84,36 +131,36 @@ VALUES ('6788023', 'Nussavas', 'Horchatnukul', '2005-06-08', 'M'),
        ('6788200', 'Wuthwara', 'Leungam', '2005-09-30', 'M');
 
 INSERT INTO Orders
-VALUES ('7392641', '16:45:03', '2025-12-08', 'INCOMPLETE', '6788023', '101'),
-       ('7396713', '20:32:55', '2025-03-17', 'COMPLETED', '6788130', '102'),
-       ('5820582', '17:56:49', '2024-04-21', 'COMPLETED', '6788112', '103'),
-       ('6767676', '13:28:52', '2025-11-20', 'INCOMPLETE', '6788200', '104'),
-       ('4927471', '12:40:54', '2025-06-07', 'COMPLETED', '6788131', '105'),
-       ('4082651', '19:40:12', '2024-08-09', 'COMPLETED', '6788023', '106'),
-       ('1245379', '15:25:35', '2025-09-11', 'COMPLETED', '6788112', '107'),
-       ('2018382', '16:39:29', '2024-08-30', 'COMPLETED', '6788130', '108'),
-       ('9876543', '12:43:03', '2023-01-19', 'COMPLETED', '6788023', '109'),
-       ('1357924', '10:23:00', '2025-12-02', 'COMPLETED', '6788200', '110'),
-       ('7400101', '11:23:45', '2025-03-10', 'COMPLETED', '6788023', '101'),
-       ('7400102', '15:40:22', '2024-11-18', 'INCOMPLETE', '6788112', '102'),
-       ('7400103', '09:12:54', '2025-07-02', 'COMPLETED', '6788130', '103'),
-       ('7400104', '18:55:13', '2024-09-21', 'COMPLETED', '6788291', '104'),
-       ('7400105', '14:01:08', '2025-04-14', 'INCOMPLETE', '6788921', '105'),
-       ('7400106', '07:25:34', '2024-06-10', 'COMPLETED', '6788371', '106'),
-       ('7400107', '16:19:45', '2023-12-19', 'COMPLETED', '6788026', '107'),
-       ('7400108', '10:10:10', '2025-10-12', 'COMPLETED', '6788145', '108'),
-       ('7400109', '20:45:59', '2024-03:28', 'INCOMPLETE', '6788131', '109'),
-       ('7400110', '12:33:18', '2025-11-03', 'COMPLETED', '6788200', '110'),
-       ('7400111', '13:22:44', '2024-05-12', 'COMPLETED', '6788023', '101'),
-       ('7400112', '17:58:01', '2025-01-30', 'COMPLETED', '6788112', '102'),
-       ('7400113', '19:49:33', '2025-08-18', 'INCOMPLETE', '6788130', '103'),
-       ('7400114', '08:20:47', '2024-10-06', 'COMPLETED', '6788291', '104'),
-       ('7400115', '22:11:39', '2025-09-09', 'COMPLETED', '6788921', '105'),
-       ('7400116', '06:59:11', '2024-07-25', 'COMPLETED', '6788371', '106'),
-       ('7400117', '21:30:07', '2023-11-09', 'INCOMPLETE', '6788026', '107'),
-       ('7400118', '15:13:21', '2025-06-16', 'COMPLETED', '6788145', '108'),
-       ('7400119', '09:44:55', '2024-04-04', 'COMPLETED', '6788131', '109'),
-       ('7400120', '18:18:18', '2025-12-05', 'INCOMPLETE', '6788200', '110');
+VALUES ('7392641', '16:45:03', '2025-12-08', 'INCOMPLETE', '6788023', '101', 10),
+       ('7396713', '20:32:55', '2025-03-17', 'COMPLETED', '6788130', '102', 12),
+       ('5820582', '17:56:49', '2024-04-21', 'COMPLETED', '6788112', '103', 2),
+       ('6767676', '13:28:52', '2025-11-20', 'INCOMPLETE', '6788200', '104', 1),
+       ('4927471', '12:40:54', '2025-06-07', 'COMPLETED', '6788131', '105', 6),
+       ('4082651', '19:40:12', '2024-08-09', 'COMPLETED', '6788023', '106', 2),
+       ('1245379', '15:25:35', '2025-09-11', 'COMPLETED', '6788112', '107', 5),
+       ('2018382', '16:39:29', '2024-08-30', 'COMPLETED', '6788130', '108', 44),
+       ('9876543', '12:43:03', '2023-01-19', 'COMPLETED', '6788023', '109', 67),
+       ('1357924', '10:23:00', '2025-12-02', 'COMPLETED', '6788200', '110', 7),
+       ('7400101', '11:23:45', '2025-03-10', 'COMPLETED', '6788023', '101', 77),
+       ('7400102', '15:40:22', '2024-11-18', 'INCOMPLETE', '6788112', '102', 9),
+       ('7400103', '09:12:54', '2025-07-02', 'COMPLETED', '6788130', '103', 10),
+       ('7400104', '18:55:13', '2024-09-21', 'COMPLETED', '6788291', '104', 12),
+       ('7400105', '14:01:08', '2025-04-14', 'INCOMPLETE', '6788921', '105', 12),
+       ('7400106', '07:25:34', '2024-06-10', 'COMPLETED', '6788371', '106', 15),
+       ('7400107', '16:19:45', '2023-12-19', 'COMPLETED', '6788026', '107', 3),
+       ('7400108', '10:10:10', '2025-10-12', 'COMPLETED', '6788145', '108', 22),
+       ('7400109', '20:45:59', '2024-03:28', 'INCOMPLETE', '6788131', '109', 21),
+       ('7400110', '12:33:18', '2025-11-03', 'COMPLETED', '6788200', '110', 8),
+       ('7400111', '13:22:44', '2024-05-12', 'COMPLETED', '6788023', '101', 3),
+       ('7400112', '17:58:01', '2025-01-30', 'COMPLETED', '6788112', '102', 6),
+       ('7400113', '19:49:33', '2025-08-18', 'INCOMPLETE', '6788130', '103', 4),
+       ('7400114', '08:20:47', '2024-10-06', 'COMPLETED', '6788291', '104', 32),
+       ('7400115', '22:11:39', '2025-09-09', 'COMPLETED', '6788921', '105', 12),
+       ('7400116', '06:59:11', '2024-07-25', 'COMPLETED', '6788371', '106', 14),
+       ('7400117', '21:30:07', '2023-11-09', 'INCOMPLETE', '6788026', '107', 18),
+       ('7400118', '15:13:21', '2025-06-16', 'COMPLETED', '6788145', '108', 13),
+       ('7400119', '09:44:55', '2024-04-04', 'COMPLETED', '6788131', '109', 3),
+       ('7400120', '18:18:18', '2025-12-05', 'INCOMPLETE', '6788200', '110', 2);
 
 INSERT INTO Branch
 VALUES ('0001', 'Bangkok Central', '2015-03-01', 'Somchai Chaiyaporn'),
@@ -293,7 +340,7 @@ SELECT c.CustomerID,
        o.OrderID,
        o.OrderStatus
 FROM Customer c
-         INNER JOIN Orders o ON c.CustomerID = o.CUSTID
+         INNER JOIN Orders o ON c.CustomerID = o.OrderCustID
 WHERE o.OrderStatus = 'COMPLETED'
 ORDER BY c.CustomerID;
 
@@ -335,8 +382,37 @@ ORDER BY StaffID;
 SELECT CustomerID, CONCAT(CustFirstName, ' ', CustLastName) AS CustomerName, ORDERID, ORDERDATE, PRODUCTID, PRODUCTNAME
 FROM Customer c
          LEFT OUTER JOIN ORDERS.O ON c.CustomerID = O.ORDERCUSTID
-         RIGHT OUTER JOIN ORDERPRODUCT op ON O.ORDERID = op.OP_OrderID
+         RIGHT OUTER JOIN OrderProduct op ON O.ORDERID = op.OP_OrderID
          LEFT OUTER JOIN PRODUCT p ON op.OP_ProductID = p.ProductID
 WHERE O.ORDERDATE < '2025-12-1'
 ORDER BY CustomerID;
 
+/* =================================================== SUN QUERIES =================================================== */
+
+-- Query 1
+SELECT *
+FROM Products
+WHERE Calories < 100
+  AND Price < 50.00;
+
+-- Query 2
+SELECT OrderID, YEAR(ORDER_DATE) AS Order_Year, UPPER(ORDER_STATUS) AS Status_Upper
+FROM Orders;
+
+-- Query 3
+SELECT ProductID, SUM(Total_amount) AS Total_Quantity_Sold
+FROM ORDER_PRODUCT
+GROUP BY ProductID
+HAVING SUM(Total_amount) > 3;
+
+-- Query 4
+SELECT o.OrderID, o.ORDER_DATE, p.Calories, op.Total_amount AS Quantity
+FROM Orders AS o
+         INNER JOIN ORDER_PRODUCT AS op ON o.OrderID = op.OrderID
+         INNER JOIN Products AS p ON op.ProductID = p.ProductID
+WHERE o.ORDER_STATUS = 'Pending';
+
+-- Query 5
+SELECT p.ProductID, p.Calories, p.Price, op.OrderID
+FROM Products AS p
+         LEFT JOIN ORDER_PRODUCT AS op ON p.ProductID = op.ProductID;
