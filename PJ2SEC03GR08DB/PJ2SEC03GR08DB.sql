@@ -238,7 +238,7 @@ VALUES ('111', 'Designer'),
        ('119', 'Designer'),
        ('120', 'Maintainer');
 
-INSERT INTO Promotion (PromotionID, EligibilityCriteria, PromotionName, PromotionStartDate, PromotionEndDate)
+INSERT INTO Promotion
 VALUES ('PROM001', 'All customers who spend over 1,000 THB', 'Spend1KGet10%', '2025-06-01', '2025-06-30'),
        ('PROM002', 'New customers only', 'Welcome20%', '2025-07-01', '2025-07-31'),
        ('PROM003', 'All members of the loyalty program', 'Loyalty15%', '2025-08-01', '2025-08-15'),
@@ -250,7 +250,7 @@ VALUES ('PROM001', 'All customers who spend over 1,000 THB', 'Spend1KGet10%', '2
        ('PROM009', 'Purchase any pastry and drink together', 'PastryCombo20%', '2025-11-01', '2025-11-15'),
        ('PROM010', 'Members who refer a friend', 'ReferAFriendFreeCroissant', '2025-11-16', '2025-11-30');
 
-INSERT INTO PromotionPromoter (PP_PromotionID, PP_PromoterStaffID)
+INSERT INTO PromotionPromoter
 VALUES ('PROM001', '111'),
        ('PROM001', '112'),
        ('PROM001', '113'),
@@ -424,6 +424,7 @@ VALUES ('2025021', '2025-02-12', '09:50:40', '4719663416897', '375642301946900',
        ('2025049', '2025-03-02', '12:25:40', '1649205783129', '372014598732110', '0004', '4927471'),
        ('2025050', '2025-03-02', '13:47:58', '7305921845013', NULL, '0005', '7400105');
 
+
 SELECT *
 FROM Branch;
 SELECT *
@@ -447,83 +448,85 @@ FROM Promotion;
 SELECT *
 FROM PromotionPromoter;
 
+
+
 /* =================================================== BEAM QUERIES =================================================== */
 
-# /*
-# Query 1:
-# Retrieve all full names of the staff members who work in branches established before 2018 and earn a salary greater than
-# 16,000 Baht. (Staff + Branch)
-# */
-#
-# SELECT CONCAT(StaffFirstName, ' ', StaffLastName) AS StaffFullName,
-#        YEAR(b.DateEstablished)                    AS BranchEstablished,
-#        s.Salary                                   AS StaffSalary,
-#        s.StaffBranchID
-# FROM Staff s
-#          INNER JOIN Branch b ON s.StaffBranchID = b.BranchID
-# WHERE YEAR(b.DateEstablished) < 2018
-#   AND s.Salary >= 16000
-# ORDER BY BranchEstablished;
-#
-# /*
-# Query 2:
-# Retrieve all cashiers along with their branch location and supervisor's name.
-# (Cashier + Staff + Branch)
-# */
-#
-# SELECT DISTINCT CONCAT(StaffFirstName, ' ', StaffLastName) AS FullName,
-#                 BranchLocation,
-#                 SupervisorName
-# FROM Cashier c
-#          INNER JOIN Staff s ON s.StaffID = c.CashierStaffID
-#          INNER JOIN Branch b ON s.StaffBranchID = b.BranchID;
-#
-# /*
-# Query 3:
-# Compute the average salaries of all cashiers and each role of promoter per branch with values of at least 16,500.00 baht,
-# displayed in descending order. (Staff + Branch + Promoter + Cashier)
-# */
-#
-# SELECT BranchLocation, `Role`, AVG(Salary) AS AvgSalary
-# FROM Staff s
-#          INNER JOIN Branch b ON s.StaffBranchID = b.BranchID
-#          INNER JOIN Cashier c ON s.StaffID = c.CashierStaffID
-# GROUP BY BranchLocation, `Role`
-# HAVING AvgSalary >= 16500
-# UNION ALL
-# SELECT BranchLocation, PromoterRole AS `Role`, AVG(Salary) AS AvgSalary
-# FROM Staff s
-#          INNER JOIN Branch b ON s.StaffBranchID = b.BranchID
-#          INNER JOIN Promoter p ON s.StaffID = p.PromoterStaffID
-# GROUP BY BranchLocation, PromoterRole
-# HAVING AvgSalary >= 16500
-# ORDER BY AvgSalary DESC;
-#
-# /*
-# Query 4:
-# List all full names of cashiers along with their service skills and cashier numbers.
-# (Staff + Cashier)
-# */
-#
-# SELECT CONCAT(StaffFirstName, ' ', StaffLastName) AS StaffFullName, CashierServiceSkill, CashierNumber
-# FROM Staff s
-#          INNER JOIN Cashier c ON s.StaffID = c.CashierStaffID;
-#
-# /*
-# Query 5:
-# Show all emails of promoters, their roles, and the branch location they work in. (Promoter + Staff + Branch)
-# */
-# SELECT *
-# FROM Branch;
-# SELECT *
-# FROM Staff;
-# SELECT *
-# FROM Promoter;
-# SELECT BranchLocation, Email, PromoterRole
-# FROM Branch b
-#          LEFT OUTER JOIN Staff s ON b.BranchID = s.StaffBranchID
-#          RIGHT OUTER JOIN Promoter p ON s.StaffID = p.PromoterStaffID
-# ORDER BY b.BranchLocation, Email;
+/*
+Query 1:
+Retrieve all full names of the staff members who work in branches established before 2018 and earn a salary greater than
+16,000 Baht. (Staff + Branch)
+*/
+
+SELECT CONCAT(StaffFirstName, ' ', StaffLastName) AS StaffFullName,
+       YEAR(b.DateEstablished)                    AS BranchEstablished,
+       s.Salary                                   AS StaffSalary,
+       s.StaffBranchID
+FROM Staff s
+         INNER JOIN Branch b ON s.StaffBranchID = b.BranchID
+WHERE YEAR(b.DateEstablished) < 2018
+  AND s.Salary >= 16000
+ORDER BY BranchEstablished;
+
+/*
+Query 2:
+Retrieve all cashiers along with their branch location and supervisor's name.
+(Cashier + Staff + Branch)
+*/
+
+SELECT DISTINCT CONCAT(StaffFirstName, ' ', StaffLastName) AS FullName,
+                BranchLocation,
+                SupervisorName
+FROM Cashier c
+         INNER JOIN Staff s ON s.StaffID = c.CashierStaffID
+         INNER JOIN Branch b ON s.StaffBranchID = b.BranchID;
+
+/*
+Query 3:
+Compute the average salaries of all cashiers and each role of promoter per branch with values of at least 16,500.00 baht,
+displayed in descending order. (Staff + Branch + Promoter + Cashier)
+*/
+
+SELECT BranchLocation, `Role`, AVG(Salary) AS AvgSalary
+FROM Staff s
+         INNER JOIN Branch b ON s.StaffBranchID = b.BranchID
+         INNER JOIN Cashier c ON s.StaffID = c.CashierStaffID
+GROUP BY BranchLocation, `Role`
+HAVING AvgSalary >= 16500
+UNION ALL
+SELECT BranchLocation, PromoterRole AS `Role`, AVG(Salary) AS AvgSalary
+FROM Staff s
+         INNER JOIN Branch b ON s.StaffBranchID = b.BranchID
+         INNER JOIN Promoter p ON s.StaffID = p.PromoterStaffID
+GROUP BY BranchLocation, PromoterRole
+HAVING AvgSalary >= 16500
+ORDER BY AvgSalary DESC;
+
+/*
+Query 4:
+List all full names of cashiers along with their service skills and cashier numbers.
+(Staff + Cashier)
+*/
+
+SELECT CONCAT(StaffFirstName, ' ', StaffLastName) AS StaffFullName, CashierServiceSkill, CashierNumber
+FROM Staff s
+         INNER JOIN Cashier c ON s.StaffID = c.CashierStaffID;
+
+/*
+Query 5:
+Show all emails of promoters, their roles, and the branch location they work in. (Promoter + Staff + Branch)
+*/
+SELECT *
+FROM Branch;
+SELECT *
+FROM Staff;
+SELECT *
+FROM Promoter;
+SELECT BranchLocation, Email, PromoterRole
+FROM Branch b
+         LEFT OUTER JOIN Staff s ON b.BranchID = s.StaffBranchID
+         RIGHT OUTER JOIN Promoter p ON s.StaffID = p.PromoterStaffID
+ORDER BY b.BranchLocation, Email;
 
 /* =================================================== BAMM QUERIES =================================================== */
 
