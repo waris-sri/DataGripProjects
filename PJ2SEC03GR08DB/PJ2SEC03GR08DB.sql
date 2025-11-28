@@ -1,11 +1,3 @@
--- TODO: ------------------------------------------------------------------
--- ! Match this SQL with the EERD, Data Dictionary, and Relational Schema !
--- ------------------------------------------------------------------------
-
--- TODO: ------------------------------------------------------------------
--- ! When Relational Schema is stable, normalize it to 3NF for full score !
--- ------------------------------------------------------------------------
-
 DROP DATABASE IF EXISTS PJ2SEC03GR08DB;
 CREATE DATABASE IF NOT EXISTS PJ2SEC03GR08DB;
 USE PJ2SEC03GR08DB;
@@ -17,26 +9,17 @@ OrderProduct
 Bill
 PromotionPromoter*/
 
--- Beam
 DROP TABLE IF EXISTS Branch;
 DROP TABLE IF EXISTS Staff;
 DROP TABLE IF EXISTS Cashier;
 DROP TABLE IF EXISTS Promoter;
-
--- Bamm
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS Customer;
-
--- Sun
 DROP TABLE IF EXISTS Products;
-DROP TABLE IF EXISTS OrderProduct;
-
--- M
 DROP TABLE IF EXISTS Bill;
-
--- Newly Added
 DROP TABLE IF EXISTS Promotion;
 DROP TABLE IF EXISTS PromotionPromoter;
+DROP TABLE IF EXISTS OrderProduct;
 
 
 /* ====================================== BEAM DDL SCOPE STARTS ====================================== */
@@ -79,7 +62,7 @@ CREATE TABLE Promoter (
 
 /* ====================================== BAMM DDL SCOPE STARTS ====================================== */
 CREATE TABLE Customer (
-    CustomerID    CHAR(7) PRIMARY KEY,
+    CustID        CHAR(7) PRIMARY KEY,
     CustFirstName VARCHAR(20) NOT NULL,
     CustLastName  VARCHAR(20) NOT NULL,
     DateOfBirth   DATE        NOT NULL,
@@ -94,7 +77,7 @@ CREATE TABLE Orders (
     OrderCustID         CHAR(7)     NOT NULL,
     OrderCashierStaffID CHAR(3)     NOT NULL,
     OrderQuantity       INT         NOT NULL, -- Newly added and adapted from Sun's
-    CONSTRAINT FK_OrderCustID FOREIGN KEY (OrderCustID) REFERENCES Customer (CustomerID),
+    CONSTRAINT FK_OrderCustID FOREIGN KEY (OrderCustID) REFERENCES Customer (CustID),
     CONSTRAINT FK_OrderCashierStaffID FOREIGN KEY (OrderCashierStaffID) REFERENCES Cashier (CashierStaffID),
     CONSTRAINT CHK_OrderStatus CHECK (OrderStatus IN ('COMPLETED', 'INCOMPLETE')),
     CONSTRAINT CHK_OrderQuantity CHECK (OrderQuantity >= 1 AND OrderQuantity <= 100)
@@ -105,8 +88,8 @@ CREATE TABLE Orders (
 CREATE TABLE Products (
     ProductID     CHAR(7)       NOT NULL PRIMARY KEY,
     ProductAmount INT           NOT NULL,
-    Price         DECIMAL(5, 2) NOT NULL,
     Calories      INT           NOT NULL,
+    Price         DECIMAL(5, 2) NOT NULL,
     ProductName   VARCHAR(50)   NOT NULL,
     ExpiryDate    DATE          NOT NULL
 );
@@ -114,13 +97,11 @@ CREATE TABLE Products (
 Binary M:N connectivity: Create a new relation, then inherit M’s & N’s PKs as relation’s individual FKs, which combines as PK
 */
 CREATE TABLE OrderProduct (
-    OP_ProductID     CHAR(7) NOT NULL,
-    OP_OrderID       CHAR(7) NOT NULL,
-    OP_OrderQuantity INT     NOT NULL,
+    OP_OrderID   CHAR(7) NOT NULL,
+    OP_ProductID CHAR(7) NOT NULL,
     CONSTRAINT PK_OrderProduct PRIMARY KEY (OP_ProductID, OP_OrderID),
-    CONSTRAINT FK_OP_ProductID FOREIGN KEY (OP_ProductID) REFERENCES Products (ProductID),
     CONSTRAINT FK_OP_OrderID FOREIGN KEY (OP_OrderID) REFERENCES Orders (OrderID),
-    CONSTRAINT CHK_OP_OrderQuantity CHECK (OP_OrderQuantity >= 1 AND OP_OrderQuantity <= 100)
+    CONSTRAINT FK_OP_ProductID FOREIGN KEY (OP_ProductID) REFERENCES Products (ProductID)
 );
 /* ====================================== SUN DDL SCOPE ENDS ====================================== */
 
@@ -349,7 +330,7 @@ VALUES ('7392641', '16:45:03', '2025-12-08', 'INCOMPLETE', '6788023', '101', 10)
 
 INSERT INTO Products
 VALUES ('4795980', 420, 29.99, 120, 'Yellow Submarine 22oz', '2025-12-01'),
-       ('7989971', 990, 15.50, 75, 'Heritage Croissant', '2025-12-14'),
+       ('7989971', 990, 15.50, 15, 'Heritage Croissant', '2025-12-14'),
        ('4489972', 890, 40.75, 100, 'Bellinee’s Signature Coffee 16oz', '2025-12-05'),
        ('4434442', 750, 75.00, 225, 'Croissant Nutella', '2025-12-20'),
        ('7324521', 990, 15.50, 75, 'Hot Matcha Latte 12oz', '2025-12-14'),
@@ -359,38 +340,6 @@ VALUES ('4795980', 420, 29.99, 120, 'Yellow Submarine 22oz', '2025-12-01'),
        ('9817245', 890, 30.75, 100, 'Iced Chocolate 16oz', '2025-12-05'),
        ('4431442', 750, 75.00, 225, 'Mini Creamy Croissant', '2025-12-20'),
        ('9832742', 677, 30.00, 350, 'Ham Cheese Croissant', '2025-12-03');
-
-INSERT INTO OrderProduct
-VALUES ('4795980', '7392641', 9),
-       ('7989971', '7396713', 2),
-       ('4489972', '5820582', 4),
-       ('4434442', '6767676', 3),
-       ('3242344', '4927471', 1),
-       ('4795980', '4082651', 1),
-       ('7989971', '1245379', 2),
-       ('1302933', '2018382', 4),
-       ('7324521', '9876543', 2),
-       ('9832742', '1357924', 1), -- 10
-       ('1302933', '7400119', 9),
-       ('9817245', '7400120', 2),
-       ('4431442', '2025212', 4),
-       ('0829342', '2020215', 3),
-       ('7324521', '2050216', 1),
-       ('3242344', '2250223', 1),
-       ('7989971', '2250218', 2),
-       ('4489972', '2025219', 4),
-       ('3242344', '2020220', 2),
-       ('9817245', '2050221', 1), -- 20
-       ('9817245', '7400101', 9),
-       ('9817245', '7400102', 2),
-       ('4489972', '7400103', 4),
-       ('0829342', '7400104', 3),
-       ('9832742', '7400105', 1),
-       ('0829342', '7400106', 1),
-       ('7989971', '7400107', 2),
-       ('4489972', '7400108', 4),
-       ('4431442', '7400109', 2),
-       ('9832742', '7400110', 1);
 
 INSERT INTO Bill
 VALUES ('2025021', '2025-02-12', '09:50:40', '4719663416897', '375642301946900', '0001', '7396713'),
@@ -424,6 +373,52 @@ VALUES ('2025021', '2025-02-12', '09:50:40', '4719663416897', '375642301946900',
        ('2025049', '2025-03-02', '12:25:40', '1649205783129', '372014598732110', '0004', '4927471'),
        ('2025050', '2025-03-02', '13:47:58', '7305921845013', NULL, '0005', '7400105');
 
+INSERT INTO OrderProduct
+VALUES ('7392641', '4795980'),
+       ('7396713', '7989971'),
+       ('5820582', '4489972'),
+       ('6767676', '4434442'),
+       ('4927471', '3242344'),
+       ('4082651', '4795980'),
+       ('1245379', '7989971'),
+       ('2018382', '1302933'),
+       ('9876543', '7324521'),
+       ('1357924', '9832742'),
+       ('7400119', '1302933'),
+       ('7400120', '9817245'),
+       ('2025212', '4431442'),
+       ('2020215', '0829342'),
+       ('2050216', '7324521'),
+       ('2250223', '3242344'),
+       ('2250218', '7989971'),
+       ('2025219', '4489972'),
+       ('2020220', '3242344'),
+       ('2050221', '9817245'),
+       ('7400101', '9817245'),
+       ('7400102', '9817245'),
+       ('7400103', '4489972'),
+       ('7400104', '0829342'),
+       ('7400105', '9832742'),
+       ('7400106', '0829342'),
+       ('7400107', '7989971'),
+       ('7400108', '4489972'),
+       ('7400109', '4431442'),
+       ('7400110', '9832742'),
+       ('7392331', '4795980'),
+       ('7400111', '7989971'),
+       ('7400117', '4489972'),
+       ('5866662', '4434442'),
+       ('7400112', '7324521'),
+       ('1232299', '0829342'),
+       ('7400113', '3242344'),
+       ('4092333', '1302933'),
+       ('7400118', '9817245'),
+       ('6754356', '4431442'),
+       ('7400114', '9832742'),
+       ('7400116', '4795980'),
+       ('2025022', '7989971'),
+       ('2025224', '4489972'),
+       ('7400115', '4434442');
 
 SELECT *
 FROM Branch;
@@ -516,12 +511,6 @@ FROM Staff s
 Query 5:
 Show all emails of promoters, their roles, and the branch location they work in. (Promoter + Staff + Branch)
 */
-SELECT *
-FROM Branch;
-SELECT *
-FROM Staff;
-SELECT *
-FROM Promoter;
 SELECT BranchLocation, Email, PromoterRole
 FROM Branch b
          LEFT OUTER JOIN Staff s ON b.BranchID = s.StaffBranchID
@@ -533,26 +522,14 @@ ORDER BY b.BranchLocation, Email;
 /*
 Show the customer orders that are in a completed status. (Customer + Order)
 */
-/*Bamm Q1*/
-SELECT c.CustomerID,
+SELECT c.CustID,
        CONCAT(c.CustFirstName, ' ', c.CustLastName) AS CustomerName,
        o.OrderID,
        o.OrderStatus
 FROM Customer c
-         INNER JOIN Orders o ON c.CustomerID = o.OrderCustID
+         INNER JOIN Orders o ON c.CustID = o.OrderCustID
 WHERE o.OrderStatus = 'COMPLETED'
-ORDER BY c.CustomerID;
-
-/*
-Show customers who are male and born before 2010, ordered by the CustomerID. (Customer)
-*/
-SELECT CustomerID,
-       CONCAT(CustFirstName, ' ', CustLastName) AS CustomerName,
-       DateOfBirth
-FROM Customer
-WHERE Gender = 'M'
-  AND YEAR(DateOfBirth) < 2010
-ORDER BY CustomerID;
+ORDER BY c.CustID;
 
 /*
 Checking the order that staff who have a salary higher than average are in charge of, and the order status is still
@@ -575,36 +552,47 @@ WHERE s.Salary > (
 ORDER BY o.OrderDate;
 
 /*
-Display the promotion that was created by the staff who is in charge of designing the promotion.
+Youngest Customer of male and female with the age
+*/
+SELECT Gender,
+       CONCAT(CustFirstName, ' ', CustLastName) AS CustomerName,
+       DateOfBirth,
+       ( YEAR(CURDATE()) - YEAR(DateOfBirth) )  AS Age
+FROM Customer c
+GROUP BY Gender, CustFirstName, CustLastName, DateOfBirth
+HAVING DateOfBirth = (
+                         SELECT MAX(DateOfBirth)
+                         FROM Customer c1
+                         WHERE c1.Gender = c.Gender
+                         );
+
+/*
+Display the promotion that was created by the staff who is in charge of designing the promotion
 (Promotion + PromotionPromoter + Promoter + Staff)
 */
-SELECT s.StaffID,
-       CONCAT(s.StaffFirstName, ' ', s.StaffLastName) AS StaffName,
-       p.PromotionID,
-       p.PromotionName,
-       pr.PromoterRole
+SELECT StaffID, CONCAT(StaffFirstName, ' ', StaffLastName) AS StaffName, PromotionID, PromotionName, PromoterRole
 FROM Staff s
-         INNER JOIN Promoter pr ON s.StaffID = pr.PromoterStaffID -- Join Staff to Promoter
-         INNER JOIN PromotionPromoter pp
-                    ON pr.PromoterStaffID = pp.PP_PromoterStaffID -- Join Promoter to PromotionPromoter
-         INNER JOIN Promotion p ON pp.PP_PromotionID = p.PromotionID -- Join PromotionPromoter to Promotion
-WHERE pr.PromoterRole = 'Designer'
-ORDER BY s.StaffID;
+         INNER JOIN Promoter pr ON s.StaffID = pr.PromoterStaffID
+         INNER JOIN PromotionPromoter pp ON s.StaffID = pp.PP_PromoterStaffID
+         INNER JOIN Promotion p ON pp.PP_PromotionID = p.PromotionID
+WHERE PromoterRole = 'Designer'
+ORDER BY StaffID;
 
 
 /*Show all of the customer and product names that they have ordered before Dec 2025 (Customer + Order+OrderProduct+Product)*/
-SELECT c.CustomerID,
+SELECT c.CustID,
        CONCAT(c.CustFirstName, ' ', c.CustLastName) AS CustomerName,
        o.OrderID,
        o.OrderDate,
        OP_ProductID,
        ProductName
 FROM Customer c
-         LEFT OUTER JOIN Orders o ON c.CustomerID = o.OrderCustID
+         LEFT OUTER JOIN Orders o ON c.CustID = o.OrderCustID
          LEFT OUTER JOIN OrderProduct op ON o.OrderID = op.OP_OrderID
          LEFT OUTER JOIN Products p ON op.OP_ProductID = p.ProductID
 WHERE o.OrderDate < '2025-12-01'
-ORDER BY CustomerID;
+ORDER BY CustID;
+
 
 /* =================================================== SUN QUERIES =================================================== */
 
@@ -621,17 +609,27 @@ SELECT OrderID, YEAR(OrderDate) AS Order_Year, UPPER(OrderStatus) AS Status_Uppe
 FROM Orders;
 
 -- Query 3
--- Compute the total quantity of items sold for each product ID
--- (only list products where the total amount sold is strictly > 3) →  Order_Product.
-SELECT OP_ProductID, SUM(OP_OrderQuantity) AS Total_Quantity_Sold
-FROM OrderProduct
+-- Compute the total quantity of items sold for each product ID, only list products where the total amount sold is
+-- strictly > 3) (OrderProduct + Orders)
+SELECT op.OP_ProductID, SUM(OrderQuantity) AS Total_Quantity_Sold
+FROM OrderProduct op
+         INNER JOIN Orders o ON o.OrderID = op.OP_OrderID
+         INNER JOIN Products p ON p.ProductID = op.OP_ProductID
+WHERE OP_ProductID = ProductID
+  AND OP_OrderID = OrderID
 GROUP BY OP_ProductID
-HAVING SUM(OP_OrderQuantity) > 3;
+HAVING Total_Quantity_Sold > 3;
 
 -- Query 4
 -- Retrieve the Order ID, the order date, the product's taste, and the quantity ordered for all orders that are
 -- currently 'INCOMPLETE'. (Orders + Order_Product + Products)
-SELECT o.OrderID, o.OrderDate, p.Calories, op.OP_OrderQuantity AS Quantity
+
+/* -----------------------------------------------------
+ *     FIXME: `op.OP_ORDERQUANTITY` ตรงนี้ฝากแก้ด้วยครับ
+------------------------------------------------------*/
+SELECT *
+FROM OrderProduct;
+SELECT o.OrderID, o.OrderDate, p.Calories, op.OP_ORDERQUANTITY AS Quantity
 FROM Orders AS o
          INNER JOIN OrderProduct AS op ON o.OrderID = op.OP_OrderID
          INNER JOIN Products AS p ON op.OP_ProductID = p.ProductID
