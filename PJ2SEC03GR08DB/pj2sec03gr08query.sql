@@ -193,4 +193,74 @@ FROM Products AS p
          LEFT JOIN OrderProduct AS op ON p.ProductID = op.OP_ProductID;
 
 /* =================================================== M QUERIES =================================================== */
--- ...
+
+/*
+Retrieve all promotions that are currently “ACTIVE” and give a discount of more than 20%, and only show promotions that
+start in the year 2025. (Promotion)
+*/
+SELECT PromotionID,
+       PromotionName,
+       PromotionStartDate,
+       PromotionEndDate,
+       EligibilityCriteria
+FROM Promotion
+WHERE PromotionStartDate BETWEEN '2025-01-01' AND '2025-12-31'
+  AND PromotionName LIKE '%20%';
+
+/*
+Show each staff member who works as a promoter, with their full name and the number of years they have worked since
+their working date. (Staff)
+*/
+SELECT StaffID,
+       CONCAT(StaffFirstName, ' ', StaffLastName) AS StaffName,
+       WorkingDate,
+       YEAR(CURDATE()) - YEAR(WorkingDate)        AS Yearsworked
+FROM Staff
+WHERE `Role` = 'Promoter'
+ORDER BY Yearsworked DESC;
+
+/*
+Compute the total item sales per day in 2025, only listing days where the sales are more than 20 items. (Bill + Orders)
+*/
+SELECT b.BillDate, SUM(o.OrderQuantity) AS TotalQuantity
+FROM Bill AS b
+         INNER JOIN Orders AS o
+                    ON b.BillOrderID = o.OrderID
+WHERE b.BillDate BETWEEN '2025-01-01' AND '2025-12-31'
+GROUP BY b.BillDate
+HAVING TotalQuantity > 20;
+
+/*
+List all promoter staff together with their staff information, including full name, email, and phone number.
+(Staff + Promoter)
+*/
+SELECT p.PromoterStaffID,
+       CONCAT(s.StaffFirstName, ' ', s.StaffLastName) AS StaffFullName,
+       s.Email,
+       s.PhoneNum,
+       p.PromoterRole
+FROM Promoter AS p
+         INNER JOIN Staff s
+                    ON p.PromoterStaffID = s.StaffID;
+
+/*
+List all customers together with any orders and bills they have, and clearly show customers who have no orders or
+whose orders do not yet have a bill. (Customer + Orders + Bill)
+*/
+SELECT c.CustID,
+       CONCAT(c.CustFirstName, ' ', c.CustLastName) AS CustomerName,
+       o.OrderID,
+       o.OrderDate,
+       o.OrderStatus,
+       b.BillID,
+       b.BillDate,
+       b.BillTime
+FROM Customer AS c
+         LEFT OUTER JOIN Orders o
+                         ON c.CustID = o.OrderCustID
+         LEFT OUTER JOIN Bill b
+                         ON o.OrderID = b.BillOrderID
+ORDER BY c.CustID, o.OrderDate, b.BillDate;
+
+
+
