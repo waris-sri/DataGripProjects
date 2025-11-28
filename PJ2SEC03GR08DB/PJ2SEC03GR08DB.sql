@@ -645,25 +645,4 @@ FROM Products AS p
          LEFT JOIN OrderProduct AS op ON p.ProductID = op.OP_ProductID;
 
 /* =================================================== M QUERIES =================================================== */
--- From workshop (corrected)
-SELECT OrderID,
-       OrderQuantity,
-       OrderDate,
-       OrderStatus
-FROM Orders
-WHERE OrderStatus = 'COMPLETED'
-  AND OrderQuantity > 20
-  AND OrderDate >= '2025-03-02'
-ORDER BY OrderDate, OrderQuantity DESC;
-
--- From workshop (corrected)
-SELECT b.BillOrderID,
-       CONCAT(CustFirstName, ' ', CustLastName) AS CustomerName,
-       b.BillDate,
-       b.BillBranchID,
-       o.OrderDate,
-       o.OrderQuantity
-FROM Bill b
-         JOIN Orders o ON b.BillOrderID = o.OrderID
-         JOIN Customer c ON o.OrderCustID = c.CustomerID
-ORDER BY b.BillDate, CustomerName;
+-- ...
