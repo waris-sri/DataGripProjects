@@ -440,9 +440,9 @@ FROM Branch;
 SELECT *
 FROM Staff;
 SELECT *
-FROM Cashier;
-SELECT *
 FROM Promoter;
+SELECT *
+FROM Cashier;
 SELECT *
 FROM Orders;
 SELECT *

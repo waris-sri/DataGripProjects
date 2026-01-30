@@ -48,7 +48,7 @@ FROM Accounts;
 START TRANSACTION;
 
 -- @ = declare user variable
-SET @balanceBob = (
+SET @BALANCEBOB = (
                       SELECT balance
                       FROM Accounts
                       WHERE account_name = 'Bob'
@@ -57,12 +57,12 @@ SET @balanceBob = (
 UPDATE Accounts
 SET balance = balance - 1000
 WHERE account_name = 'Bob'
-  AND @balanceBob >= 1000;
+  AND @BALANCEBOB >= 1000;
 
 UPDATE Accounts
 SET balance = balance + 1000
 WHERE account_name = 'Charlie'
-  AND @balanceBob >= 1000;
+  AND @BALANCEBOB >= 1000;
 
 COMMIT;
 
@@ -103,7 +103,7 @@ FROM Accounts;
 USE ICTBank;
 SET autocommit = 0;
 SHOW VARIABLES WHERE Variable_name = 'autocommit';
-SELECT @@session.transaction_isolation; -- REPEATABLE-READ (default)
+SELECT @@SESSION.TRANSACTION_ISOLATION; -- REPEATABLE-READ (default)
 START TRANSACTION;
 UPDATE ICTBank.Accounts
 SET balance = 1000
@@ -122,7 +122,7 @@ COMMIT;
 USE ICTBank;
 SET autocommit = 0;
 SHOW VARIABLES WHERE Variable_name = 'autocommit';
-SELECT @@session.transaction_isolation; -- REPEATABLE-READ (default)
+SELECT @@SESSION.TRANSACTION_ISOLATION; -- REPEATABLE-READ (default)
 START TRANSACTION;
 SELECT *
 FROM Accounts
