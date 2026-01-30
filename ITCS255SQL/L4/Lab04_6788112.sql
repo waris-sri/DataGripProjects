@@ -21,6 +21,8 @@ SET
     LastName = 'Sripatoomrak'
 WHERE
     CustomerId = 3;
+    
+
 
 -- 1b
 UPDATE Customer 
@@ -43,6 +45,7 @@ SET
 WHERE
     SupportRepId IS NOT NULL;
 
+select * from Customer;
 -- Task 2
 /*
 UPDATE
@@ -89,6 +92,9 @@ SET
 WHERE
     c.City = 'Madrid';
 
+select * from Invoice i
+        JOIN
+    Customer c on i.CustomerId = c.CustomerId;
 -- Task 3
 /*
 DELETE T1, T2
@@ -177,3 +183,105 @@ FROM
     invoice i ON c.CustomerId = i.CustomerId
 WHERE
     i.InvoiceId IS NULL;
+
+-- Task 4
+
+-- 4a
+SELECT 
+    kcu.TABLE_NAME,
+    kcu.COLUMN_NAME,
+    kcu.CONSTRAINT_NAME,
+    kcu.REFERENCED_TABLE_NAME,
+    kcu.REFERENCED_COLUMN_NAME,
+    rc.DELETE_RULE
+FROM
+    INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc
+        JOIN
+    INFORMATION_SCHEMA.KEY_COLUMN_USAGE kcu ON rc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME
+WHERE
+    rc.CONSTRAINT_SCHEMA = 'l04_Chinook'
+        AND kcu.REFERENCED_TABLE_NAME IN ('Track' , 'Artist', 'Album');
+
+-- 4b
+ALTER TABLE PlaylistTrack DROP FOREIGN KEY `FK_PlaylistTrackTrackId`;
+ALTER TABLE InvoiceLine DROP FOREIGN KEY `FK_InvoiceLineTrackId`;
+ALTER TABLE Album DROP FOREIGN KEY `FK_AlbumArtistId`;
+ALTER TABLE Track DROP FOREIGN KEY `FK_TrackAlbumId`;
+
+ALTER TABLE `Album` ADD CONSTRAINT `FK_AlbumArtistId`
+    FOREIGN KEY (`ArtistId`) REFERENCES `Artist` (`ArtistId`) ON DELETE CASCADE;
+ALTER TABLE `InvoiceLine` ADD CONSTRAINT `FK_InvoiceLineTrackId`
+    FOREIGN KEY (`TrackId`) REFERENCES `Track` (`TrackId`) ON DELETE CASCADE;
+ALTER TABLE `PlaylistTrack` ADD CONSTRAINT `FK_PlaylistTrackTrackId`
+    FOREIGN KEY (`TrackId`) REFERENCES `Track` (`TrackId`) ON DELETE CASCADE;
+ALTER TABLE `Track` ADD CONSTRAINT `FK_TrackAlbumId`
+    FOREIGN KEY (`AlbumId`) REFERENCES `Album` (`AlbumId`) ON DELETE cascade;
+-- Check 4b
+SELECT 
+    kcu.TABLE_NAME,
+    kcu.COLUMN_NAME,
+    kcu.CONSTRAINT_NAME,
+    kcu.REFERENCED_TABLE_NAME,
+    kcu.REFERENCED_COLUMN_NAME,
+    rc.DELETE_RULE
+FROM
+    INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc
+        JOIN
+    INFORMATION_SCHEMA.KEY_COLUMN_USAGE kcu ON rc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME
+WHERE
+    rc.CONSTRAINT_SCHEMA = 'l04_Chinook'
+        AND kcu.REFERENCED_TABLE_NAME IN ('Track' , 'Artist', 'Album');
+
+-- 4c
+DELETE FROM Artist 
+WHERE
+    `Name` = 'Queen';
+-- Check 4c
+SELECT 
+    'Artist' AS TableName, COUNT(*) AS RecordCount
+FROM
+    artist
+WHERE
+    Name = 'Queen' 
+UNION ALL SELECT 
+    'Albums', COUNT(*)
+FROM
+    album a
+        JOIN
+    artist ar ON a.ArtistId = ar.ArtistId
+WHERE
+    ar.Name = 'Queen' 
+UNION ALL SELECT 
+    'Tracks', COUNT(*)
+FROM
+    track t
+        JOIN
+    album a ON t.AlbumId = a.AlbumId
+        JOIN
+    artist ar ON a.ArtistId = ar.ArtistId
+WHERE
+    ar.Name = 'Queen' 
+UNION ALL SELECT 
+    'InvoiceLines', COUNT(*)
+FROM
+    invoiceline il
+        JOIN
+    track t ON il.TrackId = t.TrackId
+        JOIN
+    album a ON t.AlbumId = a.AlbumId
+        JOIN
+    artist ar ON a.ArtistId = ar.ArtistId
+WHERE
+    ar.Name = 'Queen' 
+UNION ALL SELECT 
+    'PlaylistTracks', COUNT(*)
+FROM
+    playlisttrack pt
+        JOIN
+    track t ON pt.TrackId = t.TrackId
+        JOIN
+    album a ON t.AlbumId = a.AlbumId
+        JOIN
+    artist ar ON a.ArtistId = ar.ArtistId
+WHERE
+    ar.Name = 'Queen';
