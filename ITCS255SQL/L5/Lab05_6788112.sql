@@ -99,6 +99,7 @@ ALTER TABLE customer_copy
     DROP CustomerId;
 ALTER TABLE customer_copy
     ADD CustomerId INT AUTO_INCREMENT PRIMARY KEY;
+-- NOTE: to specify the position of adding the column, use `AFTER <column_name>` (`BEFORE` doesn't exist)
 
 -- Check 5
 
