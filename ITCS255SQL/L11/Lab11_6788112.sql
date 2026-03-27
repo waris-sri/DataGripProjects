@@ -412,7 +412,7 @@ BEGIN
         SELECT SUM(ol.NumOrdered * ol.QuotedPrice)
         INTO v_amount
         FROM OrderLine ol
-                 JOIN Orders o ON ol.OrderNum = o.OrderNum
+                 INNER JOIN Orders o ON ol.OrderNum = o.OrderNum
         WHERE o.CustomerNum = p_customer
         LIMIT 1 OFFSET v_count;
         SET v_total = v_total + IFNULL(v_amount, 0);
